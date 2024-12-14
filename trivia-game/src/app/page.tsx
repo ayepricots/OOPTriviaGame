@@ -28,7 +28,7 @@ export default function Home() {
 							<Image
 								src={playBtn}
 								alt="Play Button"
-								className="cursor-pointer w-[150px] md:w-[250px] hover:brightness-75"
+								className="cursor-pointer w-[150px] md:w-[250px] hover:brightness-50"
 								quality={100}
 							/>
 						</Link>
@@ -38,7 +38,7 @@ export default function Home() {
 							<Image
 								src={aboutBtn}
 								alt="About Button"
-								className="cursor-pointer w-[200px] md:w-[300px] hover:brightness-75"
+								className="cursor-pointer w-[200px] md:w-[300px] hover:brightness-50"
 								quality={100}
 							/>
 						</Link>
