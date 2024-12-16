@@ -1,9 +1,9 @@
-export default function Feedback() {
+export default function Game() {
 	return (
 		<div>
-			<h1>Feeback</h1>
+			<h1>Gamepage</h1>
 			<p>
-				Feedback on the trivia game
+				the game
 			</p>
 		</div>
 	);
