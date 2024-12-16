@@ -11,6 +11,14 @@ class Player {
         this.score += points;
     }
 
+    resetScore() {
+        this.score = 0;
+    }
+
+    addStreak() {
+        this.streak++;
+    }
+
     resetStreak() {
         this.streak = 0;
     }
