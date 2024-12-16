@@ -33,7 +33,7 @@ export default function Home() {
 				/>
 				<div className="absolute inset-x-0 transform flex flex-col space-y-4 md:space-y-8 bottom-16 md:bottom-20">
 					<div className="flex justify-center">
-						<Link href="/game">
+						<Link href="/start">
 							<Image
 								src={playBtn}
 								alt="Play Button"
