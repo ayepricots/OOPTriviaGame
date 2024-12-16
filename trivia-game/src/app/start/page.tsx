@@ -1,10 +1,15 @@
+"use client";
+
+import { useGlobalState } from "../../context/GlobalStateContext";
+
 export default function Start() {
-	return (
-		<div>
-			<h1>Start</h1>
-			<p>
-				add fish and stuff
-			</p>
-		</div>
-	);
-};
+  const { selectedButton } = useGlobalState();
+
+  return (
+    <div className="p-10">
+      <h1 className="text-2xl font-bold">
+        You selected: {selectedButton || "None"}
+      </h1>
+    </div>
+  );
+}
