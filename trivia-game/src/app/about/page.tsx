@@ -15,6 +15,9 @@ export default function About() {
 				className="z-[-1] object-cover"
 			/>
 			<div className="relative w-[400px] md:w-[600px] flex justify-center">
+				<h1 className="absolute top-4 left-5 md:top-6 md:left-7 text-xl md:text-4xl text-white font-peaberry">
+					About us
+				</h1>
 				<Image
 					src={windowSquare}
 					alt="Window Square"
@@ -38,7 +41,7 @@ export default function About() {
 							<Image
 								src={buttonBack}
 								alt="Back Button"
-								className="cursor-pointer w-[100px] md:w-[220px] hover:brightness-50"
+								className="cursor-pointer w-[100px] md:w-[200px] hover:brightness-50"
 								quality={100}
 							/>
 						</Link>
