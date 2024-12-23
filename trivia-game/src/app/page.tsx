@@ -4,7 +4,6 @@ import backgroundImage from '../assets/bg_dim.png';
 import windowSquareAndTitle from '../assets/window_square_and_title.png';
 import playBtn from '../assets/txt_play.png';
 import aboutBtn from '../assets/txt_aboutus.png';
-import softeng from '../assets/softeng281.png';
 
 export default function Home() {
 	return (
@@ -17,14 +16,9 @@ export default function Home() {
 				className="z-[-1] object-cover"
 			/>
 			<div className="relative w-[400px] md:w-[600px]">
-				<div className="absolute top-5 left-8 md:top-7 md:left-10 w-full">
-					<Image
-						src={softeng}
-						alt="SoftEng Logo"
-						className="w-[150px] md:w-[200px]" // You can adjust the size here
-						quality={100}
-					/>
-				</div>
+				<h1 className="absolute top-4 left-5 md:top-6 md:left-7 text-xl md:text-4xl text-white font-peaberry">
+					Softeng 281
+				</h1>
 				<Image
 					src={windowSquareAndTitle}
 					alt="Window Square and Title"
