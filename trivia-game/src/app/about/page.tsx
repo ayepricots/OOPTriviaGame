@@ -25,7 +25,7 @@ export default function About() {
 					quality={100}
 				/>
 				<div className="absolute top-20 md:top-32 flex justify-center flex-col w-[340px] md:w-[500px] overflow-hidden">
-					<div className="md:text-2xl text-yellow-900 font-peaberry">
+					<div className="text-center md:text-2xl text-yellow-900 font-peaberry">
 						<p>
 							Pond Ponder is a summer project developed by the Powerpuff People team—Aye Thu, Richman Tan, and Ivory Huang.
 						</p>
@@ -41,7 +41,7 @@ export default function About() {
 							<Image
 								src={buttonBack}
 								alt="Back Button"
-								className="cursor-pointer w-[100px] md:w-[200px] hover:brightness-50"
+								className="cursor-pointer w-[90px] md:w-[160px] hover:brightness-50"
 								quality={100}
 							/>
 						</Link>
