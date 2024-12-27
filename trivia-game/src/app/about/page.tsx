@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import backgroundImage from '../../assets/bg_dim.png';
@@ -5,6 +7,11 @@ import windowSquare from '../../assets/window_square.png';
 import buttonBack from '../../assets/btn_back.png';
 
 export default function About() {
+	const playClickSound = () => {
+		const clickAudio = new Audio('/audio/click.wav');
+		clickAudio.play();
+	};
+
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
 			<Image
@@ -43,6 +50,7 @@ export default function About() {
 								alt="Back Button"
 								className="cursor-pointer w-[90px] md:w-[160px] hover:brightness-50"
 								quality={100}
+								onClick={playClickSound}
 							/>
 						</Link>
 					</div>
