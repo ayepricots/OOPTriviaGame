@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // For navigation
 import Image from "next/image";
 import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
@@ -17,6 +18,8 @@ export default function Game() {
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
+	const [timer, setTimer] = useState(30);
+	const router = useRouter(); // For navigation to the feedback page
 
 	const questionsPool: Question[] = [
 		{
@@ -89,6 +92,20 @@ export default function Game() {
 		setCurrentQuestion(getRandomQuestion());
 	}, []);
 
+	useEffect(() => {
+		const timerInterval = setInterval(() => {
+			setTimer((prev) => {
+				if (prev <= 1) {
+					clearInterval(timerInterval);
+					router.push("/feedback"); // Redirect to feedback page when timer reaches 0
+				}
+				return prev - 1;
+			});
+		}, 1000);
+
+		return () => clearInterval(timerInterval);
+	}, [router]);
+
 	const handleAnswer = () => {
 		setShowOptions(true);
 	};
@@ -97,26 +114,29 @@ export default function Game() {
 		if (!currentQuestion) return;
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
-
 		setTimeout(() => {
 			setFeedback(null);
 			setCurrentQuestion(getRandomQuestion());
 			setShowOptions(false);
-		}, 1000); // Wait for 1 second before moving to the next question
+		}, 1000);
+	};
+
+	const handleEnterPress = () => {
+		if (!showOptions) {
+			handleAnswer();
+		}
 	};
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "Enter") {
-				handleAnswer();
+				handleEnterPress();
 			}
 		};
 		window.addEventListener("keydown", handleKeyDown);
 
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [currentQuestion]);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [showOptions]);
 
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
@@ -139,16 +159,20 @@ export default function Game() {
 						className="object-cover"
 						quality={100}
 					/>
-
+					<h1 className="absolute top-3 left-7 text-2xl text-white font-peaberry">
+						Time Left: {timer}s
+					</h1>
 					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center space-y-4">
 						{feedback ? (
 							<div className="p-4 text-center text-3xl text-[#684619] font-peaberry">
 								{feedback}
 							</div>
 						) : (
-							<div className="p-4 w-full text-center text-2xl text-[#684619] font-peaberry overflow-hidden flex items-center justify-center">
-								{currentQuestion?.question}
-							</div>
+							<>
+								<div className="p-4 w-full text-center text-2xl text-[#684619] font-peaberry overflow-hidden flex items-center justify-center">
+									{currentQuestion?.question}
+								</div>
+							</>
 						)}
 
 						{showOptions && !feedback ? (
