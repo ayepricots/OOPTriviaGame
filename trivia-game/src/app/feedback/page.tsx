@@ -2,6 +2,7 @@ import Image from "next/image";
 import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
 import windowLong from "../../assets/window_long.png";
+import fish1 from "../../assets/fish1_win.png";
 
 interface Question {
 	category: string;
@@ -86,6 +87,15 @@ export default function Feedback() {
 			<div className="flex space-x-4">
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
 					<Image src={tankImage} alt="Tank" fill className="object-cover" />
+
+					<div className="absolute top-24 left-36 w-[120px]">
+						<Image
+							src={fish1}
+							alt="fish1"
+							quality={100}
+							className="object-cover"
+						/>
+					</div>
 				</div>
 				<div className="relative flex w-[350px] h-[610px] flex-col justify-between ">
 					<Image
@@ -95,6 +105,9 @@ export default function Feedback() {
 						quality={100}
 					/>
 
+					<h1 className="absolute top-3 left-4 text-2xl text-white font-peaberry">
+						Feedback
+					</h1>
 					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
 						<div className="p-4 w-full h-[500px] overflow-y-scroll text-2xl text-[#684619] font-peaberry">
 							{questionsPool.map((question, index) => (
