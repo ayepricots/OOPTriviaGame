@@ -3,6 +3,7 @@ import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
 import windowLong from "../../assets/window_long.png";
 import fish1 from "../../assets/fish1_win.png";
+import fish2 from "../../assets/fish_1.png";
 
 interface Question {
 	category: string;
@@ -88,10 +89,18 @@ export default function Feedback() {
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
 					<Image src={tankImage} alt="Tank" fill className="object-cover" />
 
-					<div className="absolute top-24 left-36 w-[120px]">
+					<div className="absolute top-28 left-20 w-[120px]">
 						<Image
 							src={fish1}
 							alt="fish1"
+							quality={100}
+							className="object-cover"
+						/>
+					</div>
+					<div className="absolute top-28 left-60 w-[90px]">
+						<Image
+							src={fish2}
+							alt="fish2"
 							quality={100}
 							className="object-cover"
 						/>
