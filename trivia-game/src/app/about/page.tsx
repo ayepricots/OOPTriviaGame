@@ -25,18 +25,31 @@ export default function About() {
 					quality={100}
 				/>
 				<div className="absolute top-20 md:top-32 flex justify-center flex-col w-[340px] md:w-[500px] overflow-hidden">
-					<div className="text-center md:text-2xl text-yellow-900 font-peaberry">
-						<p>
-							Pond Ponder is a summer project developed by the Powerpuff People team—Aye Thu, Richman Tan, and Ivory Huang.
-						</p>
-						<p>
-							As second-year developers, we wanted to create a fun and engaging trivia game to help future students practice the Object-Oriented Programming (OOP) concepts they learn in lectures.
-						</p>
-						<p>
-							Special thanks to Nasser for his guidance and supervision throughout the project.
-						</p>
+					<div className="text-center md:text-2xl text-yellow-900 font-peaberry overflow-y-auto max-h-[260px] md:max-h-[380px]">
+						<div>
+							<p>
+								Pond Ponder is a summer project developed by the Powerpuff People team—Aye Thu, Richman Tan, and Ivory Huang.
+							</p>
+							<p>
+								As second-year developers, we wanted to create a fun and engaging trivia game to help future students practice the Object-Oriented Programming (OOP) concepts they learn in lectures.
+							</p>
+							<p>
+								Special thanks to Nasser for his guidance and supervision throughout the project.
+							</p>
+						</div>
+						<div className="mt-4">
+							<p>
+								Aye Thu - <a href="https://www.linkedin.com/in/ayemyatthu04/" className="text-blue-600 hover:underline">LinkedIn</a> | <a href="https://github.com/ayepricots" className="text-blue-600 hover:underline">GitHub</a>
+							</p>
+							<p>
+								Richman Tan - <a href="https://www.linkedin.com/in/richman-tan-9961442b1/" className="text-blue-600 hover:underline">LinkedIn</a> | <a href="https://github.com/Richman-Tan" className="text-blue-600 hover:underline">GitHub</a>
+							</p>
+							<p>
+								Ivory Huang - <a href="https://www.linkedin.com/in/ivoha/" className="text-blue-600 hover:underline">LinkedIn</a> | <a href="https://github.com/ivoha" className="text-blue-600 hover:underline">GitHub</a>
+							</p>
+						</div>
 					</div>
-					<div className="mt-2 md:mt-6  flex justify-center">
+					<div className="mt-4 md:mt-6  flex justify-center">
 						<Link href="/">
 							<Image
 								src={buttonBack}
