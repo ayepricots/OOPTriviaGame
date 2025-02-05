@@ -146,12 +146,13 @@ const GameStartPage: React.FC = () => {
 									value={category}
 									onChange={(e) => setCategory(e.target.value)}
 								>
-									<option value="All Categories">All Categories</option>
-									<option value="OOP Basics">OOP Basics</option>
-									<option value="Encapsulation">Encapsulation</option>
-									<option value="Inheritance">Inheritance</option>
-									<option value="Polymorphism">Polymorphism</option>
-									<option value="Design Patterns">Design Patterns</option>
+									<option value="All Categories">All Categories ☝️</option>
+									<option value="OOP Basics">OOP Basics 🏗️</option>
+									<option value="Encapsulation">Encapsulation 🔒</option>
+									<option value="Inheritance">Inheritance 🧬</option>
+									<option value="Polymorphism">Polymorphism 🎭</option>
+									<option value="Design Patterns">Design Patterns 🏛️</option>
+
 								</select>
 								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
 									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>
@@ -170,10 +171,11 @@ const GameStartPage: React.FC = () => {
 									value={timeLimit}
 									onChange={(e) => setTimeLimit(e.target.value)}
 								>
-									<option value="5min">5 min (Standard)</option>
-									<option value="2min">2 min (Think Fast!)</option>
-									<option value="10min">10 min (Relaxed)</option>
-									<option value="Zen">Zen (No limit)</option>
+									<option value="5min">5 min (Standard) ⏳</option>
+									<option value="2min">2 min (Think Fast!) ⚡</option>
+									<option value="10min">10 min (Relaxed) 😌</option>
+									<option value="Zen">Zen (No limit) 🧘</option>
+
 								</select>
 								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
 									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>

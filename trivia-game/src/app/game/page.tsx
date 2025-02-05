@@ -198,7 +198,7 @@ export default function Game() {
 		if (isCorrect) {
 			setPlayers(prevPlayers =>
 				prevPlayers.map(p => p.key === keybinds[currentPlayerIndex]
-					? { ...p, score: p.score + 0.5 } // Increase by 0.5
+					? { ...p, score: p.score + 0.1 } // Increase by 0.5
 					: p
 				)
 			);
