@@ -50,7 +50,7 @@ export default function Game() {
 		}))
 	);
 
-	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
@@ -60,25 +60,25 @@ export default function Game() {
 
 	const questionsPool: Question[] = [
 		{
-			category: "OOP Basics 🏗️",
+			category: "OOP Basics",
 			question: "What does OOP stand for?",
 			options: ["Object-Oriented Programming", "Open-Operation Protocol", "Object Operation Protocol", "Optimal Object Processing"],
 			correctAnswer: "Object-Oriented Programming",
 		},
 		{
-			category: "OOP Basics 🏗️",
+			category: "OOP Basics",
 			question: "Which of the following is not a principle of OOP?",
 			options: ["Encapsulation", "Polymorphism", "Abstraction", "Compilation"],
 			correctAnswer: "Compilation",
 		},
 		{
-			category: "Encapsulation 🔒",
+			category: "Encapsulation",
 			question: "Encapsulation is achieved using?",
 			options: ["Classes", "Methods", "Attributes", "All of the above"],
 			correctAnswer: "All of the above",
 		},
 		{
-			category: "Inheritance 🧬",
+			category: "Inheritance",
 			question: "What is inheritance in OOP?",
 			options: [
 				"Creating a new class from an existing class",
@@ -89,31 +89,31 @@ export default function Game() {
 			correctAnswer: "Creating a new class from an existing class",
 		},
 		{
-			category: "Polymorphism 🎭",
+			category: "Polymorphism",
 			question: "Which type of polymorphism is achieved by method overloading?",
 			options: ["Compile-time", "Run-time", "Dynamic", "None of the above"],
 			correctAnswer: "Compile-time",
 		},
 		{
-			category: "Design Patterns 🏛️",
+			category: "Design Patterns",
 			question: "Which of these is a creational design pattern?",
 			options: ["Singleton", "Observer", "Adapter", "Facade"],
 			correctAnswer: "Singleton",
 		},
 		{
-			category: "OOP Basics 🏗️",
+			category: "OOP Basics",
 			question: "What keyword is used to create an object in Java?",
 			options: ["new", "create", "object", "make"],
 			correctAnswer: "new",
 		},
 		{
-			category: "Inheritance 🧬",
+			category: "Inheritance",
 			question: "In Java, which keyword is used to inherit a class?",
 			options: ["extends", "implements", "inherits", "super"],
 			correctAnswer: "extends",
 		},
 		{
-			category: "Polymorphism 🎭",
+			category: "Polymorphism",
 			question: "Which of these allows overriding a method in a subclass?",
 			options: ["Inheritance", "Encapsulation", "Abstraction", "None of the above"],
 			correctAnswer: "Inheritance",
