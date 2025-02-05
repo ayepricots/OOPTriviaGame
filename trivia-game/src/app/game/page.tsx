@@ -7,6 +7,9 @@ import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
 import windowLong from "../../assets/window_long.png";
 import fishImage from "../../assets/fish.jpeg";
+import ivoryfish from "../../assets/ivoryfish.png";
+import ayefish from "../../assets/ayefish.png";
+import richmanfish from "../../assets/richmanfish.png";
 
 interface Question {
 	category: string;
@@ -37,11 +40,13 @@ export default function Game() {
 	const keybinds = ["A", "F", "J", "L"].slice(0, numPlayers);
 
 	// fish and player states
+	const fishImages = [fishImage, ivoryfish, ayefish, richmanfish];
 	const [players, setPlayers] = useState(
 		Array.from({ length: numPlayers }, (_, i) => ({
 			id: i,
-			score: 1, // Fish size multiplier
+			score: 1,
 			key: keybinds[i],
+			fishImage: fishImages[i % fishImages.length], // Assign fish images in order
 		}))
 	);
 
@@ -55,25 +60,25 @@ export default function Game() {
 
 	const questionsPool: Question[] = [
 		{
-			category: "OOP Basics",
+			category: "OOP Basics 🏗️",
 			question: "What does OOP stand for?",
 			options: ["Object-Oriented Programming", "Open-Operation Protocol", "Object Operation Protocol", "Optimal Object Processing"],
 			correctAnswer: "Object-Oriented Programming",
 		},
 		{
-			category: "OOP Basics",
+			category: "OOP Basics 🏗️",
 			question: "Which of the following is not a principle of OOP?",
 			options: ["Encapsulation", "Polymorphism", "Abstraction", "Compilation"],
 			correctAnswer: "Compilation",
 		},
 		{
-			category: "Encapsulation",
+			category: "Encapsulation 🔒",
 			question: "Encapsulation is achieved using?",
 			options: ["Classes", "Methods", "Attributes", "All of the above"],
 			correctAnswer: "All of the above",
 		},
 		{
-			category: "Inheritance",
+			category: "Inheritance 🧬",
 			question: "What is inheritance in OOP?",
 			options: [
 				"Creating a new class from an existing class",
@@ -84,31 +89,31 @@ export default function Game() {
 			correctAnswer: "Creating a new class from an existing class",
 		},
 		{
-			category: "Polymorphism",
+			category: "Polymorphism 🎭",
 			question: "Which type of polymorphism is achieved by method overloading?",
 			options: ["Compile-time", "Run-time", "Dynamic", "None of the above"],
 			correctAnswer: "Compile-time",
 		},
 		{
-			category: "Design Patterns",
+			category: "Design Patterns 🏛️",
 			question: "Which of these is a creational design pattern?",
 			options: ["Singleton", "Observer", "Adapter", "Facade"],
 			correctAnswer: "Singleton",
 		},
 		{
-			category: "OOP Basics",
+			category: "OOP Basics 🏗️",
 			question: "What keyword is used to create an object in Java?",
 			options: ["new", "create", "object", "make"],
 			correctAnswer: "new",
 		},
 		{
-			category: "Inheritance",
+			category: "Inheritance 🧬",
 			question: "In Java, which keyword is used to inherit a class?",
 			options: ["extends", "implements", "inherits", "super"],
 			correctAnswer: "extends",
 		},
 		{
-			category: "Polymorphism",
+			category: "Polymorphism 🎭",
 			question: "Which of these allows overriding a method in a subclass?",
 			options: ["Inheritance", "Encapsulation", "Abstraction", "None of the above"],
 			correctAnswer: "Inheritance",
@@ -138,12 +143,18 @@ export default function Game() {
 	// save the game results
 	const saveGameResults = () => {
 		const gameResults = {
-			players: players,
+			players: players.map(player => ({
+				id: player.id,
+				score: player.score,
+				key: player.key,
+				fishImage: player.fishImage.src,
+			})),
 			fishPositions: fishPositions,
 		};
 
 		localStorage.setItem("gameResults", JSON.stringify(gameResults));
 	};
+
 
 
 	// timer countdown 
@@ -225,7 +236,7 @@ export default function Game() {
 
 			<div className="flex space-x-4">
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
-					<Image src={tankImage} alt="Tank" fill className="object-cover" />
+					<Image src={tankImage} alt="Tank" fill quality={100} className="object-cover" />
 
 					<div className="absolute top-3 left-6 text-2xl text-white font-peaberry">
 						Time left: {timer === Infinity ? "Zen Mode" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
@@ -247,10 +258,11 @@ export default function Game() {
 							className="fish-container"
 						>
 							<Image
-								src={fishImage}
+								src={player.fishImage}
 								alt={`Fish ${index + 1}`}
 								width={Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}
 								height={Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}
+								quality={100}
 								className="fish-bob"
 							/>
 							<span className="text-white text-lg font-bold bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]">

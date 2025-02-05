@@ -9,6 +9,9 @@ import btnAdd from "../../assets/btn_add.png";
 import windowLong from "../../assets/window_long.png";
 import fishImage from "../../assets/fish.jpeg";
 import startImage from "../../assets/btn_start.png";
+import ivoryfish from "../../assets/ivoryfish.png";
+import ayefish from "../../assets/ayefish.png";
+import richmanfish from "../../assets/richmanfish.png";
 
 const GameStartPage: React.FC = () => {
 	const router = useRouter(); // ✅ Initialize Router
@@ -16,11 +19,13 @@ const GameStartPage: React.FC = () => {
 	// State for game settings
 	const [category, setCategory] = useState("All Categories");
 	const [timeLimit, setTimeLimit] = useState("5min");
-	const [fishPositions, setFishPositions] = useState<{
-		top: number;
-		left: number;
-	}[]>([
-		{ top: 20, left: 30 }, // Set one default fish position
+	const fishTypes = [fishImage, ivoryfish, ayefish, richmanfish];
+
+
+	const [fishPositions, setFishPositions] = useState<
+		{ top: number; left: number; image: any }[]
+	>([
+		{ top: 20 + Math.random() * 50, left: 20 + Math.random() * 50, image: fishTypes[0] }, // Default fish
 	]);
 
 	// Load settings from localStorage if they exist
@@ -56,8 +61,8 @@ const GameStartPage: React.FC = () => {
 	const handleAddPlayer = () => {
 		setFishPositions((prev) => {
 			if (prev.length >= 4) {
-				// Reset to 1 fish
-				return [{ top: 30, left: 50 }];
+				// Reset to 1 fish, but make sure it starts with fishTypes[1]
+				return [{ top: 20 + Math.random() * 50, left: 20 + Math.random() * 50, image: fishTypes[0] }];
 			}
 
 			let newTop, newLeft;
@@ -66,9 +71,22 @@ const GameStartPage: React.FC = () => {
 				newLeft = 20 + Math.random() * 50;
 			} while (isOverlapping(newTop, newLeft));
 
-			return [...prev, { top: newTop, left: newLeft }];
+			// Exclude fishTypes[0] from selection
+			const availableFish = fishTypes.slice(1); // Use only fishTypes[1] to fishTypes[3]
+
+			// Pick a unique fish image that hasn't been used
+			const usedFish = prev.map((p) => p.image);
+			const remainingFish = availableFish.filter((f) => !usedFish.includes(f));
+
+			// Choose a new unique fish or cycle through available ones
+			const newFishImage = remainingFish.length > 0
+				? remainingFish[0] // Prioritize unique fish
+				: availableFish[prev.length % availableFish.length]; // Cycle through fishTypes[1] to fishTypes[3]
+
+			return [...prev, { top: newTop, left: newLeft, image: newFishImage }];
 		});
 	};
+
 
 	const handleStart = () => {
 		// Save settings before navigation
@@ -109,14 +127,15 @@ const GameStartPage: React.FC = () => {
 			<div className="flex space-x-4">
 				{/* Left Container: Tank Image */}
 				<div className="rounded-lg p-0 shadow-lg w-[400px] h-[310px] overflow-hidden relative">
-					<Image src={tankImage} alt="Tank" fill className="object-cover" />
+					<Image src={tankImage} alt="Tank" fill quality={100} className="object-cover" />
 					{/* Fish Players */}
 					<div className="absolute inset-0">
 						{fishPositions.map((position, index) => (
 							<Image
 								key={index}
-								src={fishImage}
+								src={position.image}
 								alt="Fish"
+								quality={100}
 								className="absolute fish-bob"
 								style={{
 									top: `${position.top}%`,
@@ -172,7 +191,7 @@ const GameStartPage: React.FC = () => {
 									onChange={(e) => setTimeLimit(e.target.value)}
 								>
 									<option value="5min">5 min (Standard) ⏳</option>
-									<option value="2min">2 min (Think Fast!) ⚡</option>
+									<option value="2min">2 min (Think Fast) ⚡</option>
 									<option value="10min">10 min (Relaxed) 😌</option>
 									<option value="Zen">Zen (No limit) 🧘</option>
 
@@ -195,6 +214,7 @@ const GameStartPage: React.FC = () => {
 								alt="Add"
 								width={55}
 								height={55}
+								quality={100}
 								className="cursor-pointer hover:scale-110 transition-transform"
 							/>
 						</div>
@@ -205,6 +225,7 @@ const GameStartPage: React.FC = () => {
 						<Image
 							src={startImage}
 							alt="Start Button"
+							quality={100}
 							className="cursor-pointer hover:scale-105 transition-transform height-[200px] width-[200px]"
 							onClick={handleStart}
 						/>
