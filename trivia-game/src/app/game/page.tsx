@@ -257,6 +257,7 @@ export default function Game() {
 								flexDirection: "column",
 								alignItems: "center",
 								justifyContent: "center",
+								transition: "width 0.5s ease", // Smooth transition for size change
 							}}
 							className="fish-container"
 						>
@@ -270,7 +271,7 @@ export default function Game() {
 							/>
 
 							<span
-								className={`text-white text-lg font-bold bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px] 
+								className={`text-white text-lg font-peaberry bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]  
                         ${currentPlayerIndex === index ? "bg-[#68461B]" : ""}  // Change color when answering`}
 							>
 								{player.key}
@@ -304,7 +305,7 @@ export default function Game() {
 						{currentQuestion?.category}
 					</h1>
 
-					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center space-y-4">
+					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center ">
 						{feedback ? (
 							<div className="p-4 text-center text-3xl text-[#684619] font-peaberry">
 								{feedback}
@@ -323,7 +324,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[250px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+										className="w-[250px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
 									>
 										{option}
 									</button>
@@ -335,7 +336,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleAnswer(player.key)}
-										className="w-[50px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+										className="w-[50px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
 									>
 										{player.key}
 									</button>
@@ -352,7 +353,7 @@ export default function Game() {
 									saveGameResults();
 									router.push("/feedback");
 								}}
-								className="w-[250px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] transition"
 							>
 								Done
 							</button>
