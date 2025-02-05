@@ -219,6 +219,9 @@ export default function Game() {
 			setFeedback(null);
 			setCurrentQuestion(getRandomQuestion());
 			setShowOptions(false);
+
+			// Reset the current player index to none when the next question is shown
+			setCurrentPlayerIndex(-1);
 		}, 1000);
 	};
 
@@ -265,7 +268,11 @@ export default function Game() {
 								quality={100}
 								className="fish-bob"
 							/>
-							<span className="text-white text-lg font-bold bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]">
+
+							<span
+								className={`text-white text-lg font-bold bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px] 
+                        ${currentPlayerIndex === index ? "bg-[#68461B]" : ""}  // Change color when answering`}
+							>
 								{player.key}
 							</span>
 						</div>
@@ -280,16 +287,6 @@ export default function Game() {
 							}
 							.fish-container {
 								animation: bob 2s infinite ease-in-out;
-							}
-							.fish-label {
-								color: white;
-								font-size: 16px;
-								font-weight: bold;
-								background: black;
-								padding: 2px 6px;
-								border-radius: 4px;
-								opacity: 0.8;
-								margin-bottom: 5px; /* Keeps space between label and fish */
 							}
 						`}
 					</style>
