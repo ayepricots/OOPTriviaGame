@@ -26,12 +26,31 @@ export default function Game() {
 					Infinity // Zen Mode (No timer)
 	);
 	const fishPositions = gameSettings.fishPositions || [];
+	const numPlayers = Math.min(fishPositions.length, 4);
 
+
+	// Initial fish size
+	const FISH_SIZE = 75;
+
+	// keybinds for up to 4 players
+	const keybinds = ["A", "F", "J", "L"].slice(0, numPlayers);
+
+	// fish and player states
+	const [players, setPlayers] = useState(
+		Array.from({ length: numPlayers }, (_, i) => ({
+			id: i,
+			score: 1, // Fish size multiplier
+			key: keybinds[i],
+		}))
+	);
+
+	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
-	const router = useRouter(); // For navigation to the feedback page
 
+	// For navigation to the feedback page
+	const router = useRouter();
 
 	const questionsPool: Question[] = [
 		{
@@ -95,6 +114,7 @@ export default function Game() {
 		},
 	];
 
+	// filter questions based on category
 	const selectedCategory = gameSettings.category;
 
 	const filteredQuestions: Question[] =
@@ -114,7 +134,7 @@ export default function Game() {
 		setCurrentQuestion(getRandomQuestion());
 	}, []);
 
-
+	// timer countdown 
 	useEffect(() => {
 		if (timer === Infinity) return; // Don't start the timer in Zen mode
 
@@ -131,15 +151,39 @@ export default function Game() {
 		return () => clearInterval(timerInterval);
 	}, [router, timer]);
 
+	// Handle player key press
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			const playerIndex = players.findIndex(p => p.key.toLowerCase() === event.key.toLowerCase());
+			if (playerIndex !== -1) {
+				setCurrentPlayerIndex(playerIndex);
+				handleAnswer();
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [players]);
 
+	// show options
 	const handleAnswer = () => {
 		setShowOptions(true);
 	};
 
+	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
+
+		if (isCorrect) {
+			setPlayers(prevPlayers =>
+				prevPlayers.map(p => p.key === keybinds[currentPlayerIndex]
+					? { ...p, score: p.score + 0.5 } // Increase by 0.5
+					: p
+				)
+			);
+		}
+
 		setTimeout(() => {
 			setFeedback(null);
 			setCurrentQuestion(getRandomQuestion());
@@ -147,22 +191,7 @@ export default function Game() {
 		}, 1000);
 	};
 
-	const handleEnterPress = () => {
-		if (!showOptions) {
-			handleAnswer();
-		}
-	};
 
-	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Enter") {
-				handleEnterPress();
-			}
-		};
-		window.addEventListener("keydown", handleKeyDown);
-
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [showOptions]);
 
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
@@ -177,20 +206,17 @@ export default function Game() {
 			<div className="flex space-x-4">
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
 					<Image src={tankImage} alt="Tank" fill className="object-cover" />
-					{fishPositions.map((position: { top: number; left: number; size: number }, index: number) => (
-						<Image
-							key={index}
+					{players.map((player, index) => (
+						<Image key={index}
 							src={fishImage}
-							alt="Fish"
-							width={position.size}
-							height={position.size}
+							alt={`Fish ${index + 1}`}
+							width={FISH_SIZE * player.score}
+							height={FISH_SIZE * player.score}
 							className="absolute fish-bob"
 							style={{
-								top: `${position.top}%`,
-								left: `${position.left}%`,
-								width: "75px",
-							}}
-						/>
+								top: `${fishPositions[index]?.top}%`,
+								left: `${fishPositions[index]?.left}%`
+							}} />
 					))}
 
 					{/* Keyframes Animation */}

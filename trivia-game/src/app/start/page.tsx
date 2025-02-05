@@ -16,9 +16,12 @@ const GameStartPage: React.FC = () => {
 	// State for game settings
 	const [category, setCategory] = useState("All Categories");
 	const [timeLimit, setTimeLimit] = useState("5min");
-	const [fishPositions, setFishPositions] = useState<
-		{ top: number; left: number }[]
-	>([]);
+	const [fishPositions, setFishPositions] = useState<{
+		top: number;
+		left: number;
+	}[]>([
+		{ top: 20, left: 30 }, // Set one default fish position
+	]);
 
 	// Load settings from localStorage if they exist
 	useEffect(() => {
@@ -53,7 +56,8 @@ const GameStartPage: React.FC = () => {
 	const handleAddPlayer = () => {
 		setFishPositions((prev) => {
 			if (prev.length >= 4) {
-				return [];
+				// Reset to 1 fish
+				return [{ top: 20, left: 30 }];
 			}
 
 			let newTop, newLeft;
@@ -93,7 +97,13 @@ const GameStartPage: React.FC = () => {
 			</style>
 
 			{/* Background Image */}
-			<Image src={backgroundImage} alt="Background" fill quality={100} className="z-[-1] object-cover" />
+			<Image
+				src={backgroundImage}
+				alt="Background"
+				fill
+				quality={100}
+				className="z-[-1] object-cover"
+			/>
 
 			{/* Main Container */}
 			<div className="flex space-x-4">
@@ -127,7 +137,9 @@ const GameStartPage: React.FC = () => {
 					<div className="space-y-4 mt-20">
 						{/* Category Dropdown */}
 						<div className="flex flex-col">
-							<label className="text-3xl font-peaberry mb-1 text-[#68461A]">Category</label>
+							<label className="text-3xl font-peaberry mb-1 text-[#68461A]">
+								Category
+							</label>
 							<div className="relative">
 								<select
 									className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#848266] rounded-lg font-peaberry appearance-none text-xl"
@@ -149,7 +161,9 @@ const GameStartPage: React.FC = () => {
 
 						{/* Time Limit Dropdown */}
 						<div className="flex flex-col">
-							<label className="font-peaberry mb-1 text-[#68461A] text-3xl">Time limit</label>
+							<label className="font-peaberry mb-1 text-[#68461A] text-3xl">
+								Time limit
+							</label>
 							<div className="relative">
 								<select
 									className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#848266] rounded-lg font-peaberry appearance-none text-xl"
@@ -170,7 +184,9 @@ const GameStartPage: React.FC = () => {
 
 					{/* Players Section */}
 					<div className="flex items-center justify-between">
-						<span className="font-peaberry text-[#68461A] text-3xl">Players: {fishPositions.length}/4</span>
+						<span className="font-peaberry text-[#68461A] text-3xl">
+							Players: {fishPositions.length}/4
+						</span>
 						<div className="w-[30px] h-[30px]" onClick={handleAddPlayer}>
 							<Image
 								src={btnAdd}
