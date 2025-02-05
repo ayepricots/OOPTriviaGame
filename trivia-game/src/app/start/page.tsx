@@ -120,15 +120,19 @@ const GameStartPage: React.FC = () => {
           <div className="space-y-4 mt-20">
             {/* Category Dropdown */}
             <div className="flex flex-col">
-              <label className="text-3xl font-semibold mb-1 text-[#68461A]">Category</label>
+              <label className="text-3xl font-peaberry mb-1 text-[#68461A]">Category</label>
               <div className="relative">
                 <select
-                  className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#4E4E4E] rounded-lg font-mono appearance-none text-xl"
+                  className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#4E4E4E] rounded-lg font-peaberry appearance-none text-xl"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
-                  <option value="debug">Debug</option>
-                  <option value="oop">OOP</option>
+                  <option value="oop-basics">OOP Basics</option>
+                  <option value="encapsulation">Encapsulation</option>
+									<option value="inheritance">Inheritance</option>
+									<option value="polymorphism">Polymorphism</option>
+									<option value="design-patterns">Design Patterns</option>
+
                 </select>
                 <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
                   <span className="text-[#4E4E4E] font-bold">&#x25BC;</span>
@@ -138,10 +142,10 @@ const GameStartPage: React.FC = () => {
 
             {/* Time Limit Dropdown */}
             <div className="flex flex-col">
-              <label className="font-semibold mb-1 text-[#68461A] text-3xl">Time limit</label>
+              <label className="font-peaberry mb-1 text-[#68461A] text-3xl">Time limit</label>
               <div className="relative">
                 <select
-                  className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#4E4E4E] rounded-lg font-mono appearance-none"
+                  className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#4E4E4E] rounded-lg font-peaberry appearance-none text-xl"
                   value={timeLimit}
                   onChange={(e) => setTimeLimit(e.target.value)}
                 >
@@ -157,7 +161,7 @@ const GameStartPage: React.FC = () => {
 
           {/* Players Section */}
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-[#68461A] text-3xl">Players: {fishPositions.length}/4</span>
+            <span className="font-peaberry text-[#68461A] text-3xl">Players: {fishPositions.length}/4</span>
             <div className="w-[30px] h-[30px]" onClick={handleAddPlayer}>
               <Image
                 src={btnAdd}
