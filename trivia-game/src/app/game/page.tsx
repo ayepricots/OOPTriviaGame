@@ -227,7 +227,7 @@ export default function Game() {
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
 					<Image src={tankImage} alt="Tank" fill className="object-cover" />
 
-					<div className="absolute top-3 left-6 text-xl text-white font-peaberry">
+					<div className="absolute top-3 left-6 text-2xl text-white font-peaberry">
 						Time left: {timer === Infinity ? "Zen Mode" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
 					</div>
 
@@ -291,8 +291,8 @@ export default function Game() {
 						className="object-cover"
 						quality={100}
 					/>
-					<h1 className="absolute top-3 left-7 text-xl text-white font-peaberry">
-						Category: {currentQuestion?.category}
+					<h1 className="absolute top-3 left-7 text-2xl text-white font-peaberry">
+						{currentQuestion?.category}
 					</h1>
 
 					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center space-y-4">
@@ -314,7 +314,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[250px] p-2 bg-[#ACD7C6] text-xl text-[#684619] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+										className="w-[250px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
 									>
 										{option}
 									</button>
@@ -326,7 +326,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleAnswer(player.key)}
-										className="w-[100px] p-2 bg-[#ACD7C6] text-xl text-[#684619] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+										className="w-[50px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
 									>
 										{player.key}
 									</button>
@@ -343,7 +343,7 @@ export default function Game() {
 									saveGameResults();
 									router.push("/feedback");
 								}}
-								className="w-[250px] p-2 bg-[#ACD7C6] text-xl text-[#684619] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+								className="w-[250px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
 							>
 								Done
 							</button>
