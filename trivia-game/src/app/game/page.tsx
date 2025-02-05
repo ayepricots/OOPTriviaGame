@@ -6,6 +6,7 @@ import Image from "next/image";
 import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
 import windowLong from "../../assets/window_long.png";
+import fishImage from "../../assets/fish.jpeg";
 
 interface Question {
 	category: string;
@@ -15,11 +16,22 @@ interface Question {
 }
 
 export default function Game() {
+
+	// retrieve from local storage
+	const gameSettings = JSON.parse(localStorage.getItem("gameSettings") || "{}");
+	const [timer, setTimer] = useState<number>(
+		gameSettings.timeLimit === "2min" ? 120 :   // 120s = 2 min
+			gameSettings.timeLimit === "5min" ? 300 :   // 300s = 5 min (default)
+				gameSettings.timeLimit === "10min" ? 600 :  // 600s = 10 min
+					Infinity // Zen Mode (No timer)
+	);
+	const fishPositions = gameSettings.fishPositions || [];
+
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
-	const [timer, setTimer] = useState(30);
 	const router = useRouter(); // For navigation to the feedback page
+
 
 	const questionsPool: Question[] = [
 		{
@@ -83,28 +95,42 @@ export default function Game() {
 		},
 	];
 
-	const getRandomQuestion = (): Question => {
-		const randomIndex = Math.floor(Math.random() * questionsPool.length);
-		return questionsPool[randomIndex];
+	const selectedCategory = gameSettings.category;
+
+	const filteredQuestions: Question[] =
+		selectedCategory === "All Categories" || !selectedCategory
+			? questionsPool
+			: questionsPool.filter((q) => q.category === selectedCategory);
+
+	// Function to get a random question from the filtered list
+	const getRandomQuestion = (): Question | null => {
+		if (filteredQuestions.length === 0) return null; // Handle case where no questions match
+		const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
+		return filteredQuestions[randomIndex];
 	};
 
+	// Set the first question
 	useEffect(() => {
 		setCurrentQuestion(getRandomQuestion());
 	}, []);
 
+
 	useEffect(() => {
+		if (timer === Infinity) return; // Don't start the timer in Zen mode
+
 		const timerInterval = setInterval(() => {
 			setTimer((prev) => {
 				if (prev <= 1) {
 					clearInterval(timerInterval);
-					router.push("/feedback"); // Redirect to feedback page when timer reaches 0
+					router.push("/feedback"); // Redirect when timer reaches 0
 				}
 				return prev - 1;
 			});
 		}, 1000);
 
 		return () => clearInterval(timerInterval);
-	}, [router]);
+	}, [router, timer]);
+
 
 	const handleAnswer = () => {
 		setShowOptions(true);
@@ -151,6 +177,33 @@ export default function Game() {
 			<div className="flex space-x-4">
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
 					<Image src={tankImage} alt="Tank" fill className="object-cover" />
+					{fishPositions.map((position: { top: number; left: number; size: number }, index: number) => (
+						<Image
+							key={index}
+							src={fishImage}
+							alt="Fish"
+							width={position.size}
+							height={position.size}
+							className="absolute fish-bob"
+							style={{
+								top: `${position.top}%`,
+								left: `${position.left}%`,
+							}}
+						/>
+					))}
+
+					{/* Keyframes Animation */}
+					<style>
+						{`
+          @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+          .fish-bob {
+            animation: bob 2s infinite ease-in-out;
+          }
+        `}
+					</style>
 				</div>
 				<div className="relative flex w-[350px] h-[610px] flex-col justify-between ">
 					<Image
@@ -160,8 +213,9 @@ export default function Game() {
 						quality={100}
 					/>
 					<h1 className="absolute top-3 left-7 text-2xl text-white font-peaberry">
-						Time Left: {timer}s
+						Time Left: {timer === Infinity ? "Zen" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
 					</h1>
+
 					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center space-y-4">
 						{feedback ? (
 							<div className="p-4 text-center text-3xl text-[#684619] font-peaberry">
@@ -196,6 +250,17 @@ export default function Game() {
 							</button>
 						) : null}
 					</div>
+
+					{timer === Infinity && (
+						<div className="absolute bottom-6 left-0 right-0 flex justify-center">
+							<button
+								onClick={() => router.push("/feedback")}
+								className="w-[250px] p-2 bg-[#ACD7C6] text-xl text-[#684619] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+							>
+								Done
+							</button>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
