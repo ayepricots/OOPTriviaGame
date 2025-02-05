@@ -17,7 +17,7 @@ const GameStartPage: React.FC = () => {
 	const [category, setCategory] = useState("All Categories");
 	const [timeLimit, setTimeLimit] = useState("5min");
 	const [fishPositions, setFishPositions] = useState<
-		{ top: number; left: number; size: number }[]
+		{ top: number; left: number }[]
 	>([]);
 
 	// Load settings from localStorage if they exist
@@ -41,20 +41,28 @@ const GameStartPage: React.FC = () => {
 		localStorage.setItem("gameSettings", JSON.stringify(gameSettings));
 	}, [category, timeLimit, fishPositions]);
 
+	// Function to check if a new fish overlaps with existing ones
+	const isOverlapping = (top: number, left: number) => {
+		return fishPositions.some(
+			(fish) =>
+				Math.abs(fish.top - top) < 20 && Math.abs(fish.left - left) < 20
+		);
+	};
+
 	// Function to handle adding players (fish)
 	const handleAddPlayer = () => {
 		setFishPositions((prev) => {
 			if (prev.length >= 4) {
 				return [];
 			}
-			return [
-				...prev,
-				{
-					top: Math.random() * 80,
-					left: Math.random() * 80,
-					size: Math.max(50, Math.random() * 100),
-				},
-			];
+
+			let newTop, newLeft;
+			do {
+				newTop = Math.random() * 80;
+				newLeft = Math.random() * 80;
+			} while (isOverlapping(newTop, newLeft));
+
+			return [...prev, { top: newTop, left: newLeft }];
 		});
 	};
 
@@ -99,12 +107,11 @@ const GameStartPage: React.FC = () => {
 								key={index}
 								src={fishImage}
 								alt="Fish"
-								width={position.size}
-								height={position.size}
 								className="absolute fish-bob"
 								style={{
 									top: `${position.top}%`,
 									left: `${position.left}%`,
+									width: "75px",
 								}}
 							/>
 						))}
@@ -133,7 +140,6 @@ const GameStartPage: React.FC = () => {
 									<option value="Inheritance">Inheritance</option>
 									<option value="Polymorphism">Polymorphism</option>
 									<option value="Design Patterns">Design Patterns</option>
-
 								</select>
 								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
 									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>

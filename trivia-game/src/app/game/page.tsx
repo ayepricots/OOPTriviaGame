@@ -188,6 +188,7 @@ export default function Game() {
 							style={{
 								top: `${position.top}%`,
 								left: `${position.left}%`,
+								width: "75px",
 							}}
 						/>
 					))}
