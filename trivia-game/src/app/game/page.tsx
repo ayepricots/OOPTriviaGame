@@ -135,6 +135,17 @@ export default function Game() {
 		setCurrentQuestion(getRandomQuestion());
 	}, []);
 
+	// save the game results
+	const saveGameResults = () => {
+		const gameResults = {
+			players: players,
+			fishPositions: fishPositions,
+		};
+
+		localStorage.setItem("gameResults", JSON.stringify(gameResults));
+	};
+
+
 	// timer countdown 
 	useEffect(() => {
 		if (timer === Infinity) return; // Don't start the timer in Zen mode
@@ -143,7 +154,8 @@ export default function Game() {
 			setTimer((prev) => {
 				if (prev <= 1) {
 					clearInterval(timerInterval);
-					router.push("/feedback"); // Redirect when timer reaches 0
+					saveGameResults(); // Save results before redirecting
+					router.push("/feedback");
 				}
 				return prev - 1;
 			});
@@ -152,7 +164,7 @@ export default function Game() {
 		return () => clearInterval(timerInterval);
 	}, [router, timer]);
 
-	// Handle player key press
+
 	// Handle player key press
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -322,11 +334,15 @@ export default function Game() {
 					{timer === Infinity && (
 						<div className="absolute bottom-6 left-0 right-0 flex justify-center">
 							<button
-								onClick={() => router.push("/feedback")}
+								onClick={() => {
+									saveGameResults();
+									router.push("/feedback");
+								}}
 								className="w-[250px] p-2 bg-[#ACD7C6] text-xl text-[#684619] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
 							>
 								Done
 							</button>
+
 						</div>
 					)}
 				</div>
