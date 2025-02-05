@@ -29,8 +29,9 @@ export default function Game() {
 	const numPlayers = Math.min(fishPositions.length, 4);
 
 
-	// Initial fish size
+	// fish size
 	const FISH_SIZE = 75;
+	const MAX_FISH_SIZE = 200; // Cap size of fish
 
 	// keybinds for up to 4 players
 	const keybinds = ["A", "F", "J", "L"].slice(0, numPlayers);
@@ -152,22 +153,29 @@ export default function Game() {
 	}, [router, timer]);
 
 	// Handle player key press
+	// Handle player key press
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
-			const playerIndex = players.findIndex(p => p.key.toLowerCase() === event.key.toLowerCase());
-			if (playerIndex !== -1) {
-				setCurrentPlayerIndex(playerIndex);
-				handleAnswer();
+			const keyPressed = event.key.toUpperCase(); // Match defined keybinds
+			if (keybinds.includes(keyPressed)) {
+				handleAnswer(keyPressed);
 			}
 		};
+
 		window.addEventListener("keydown", handleKeyDown);
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [players]);
+	}, [players, keybinds]);
+
 
 	// show options
-	const handleAnswer = () => {
-		setShowOptions(true);
+	const handleAnswer = (key: string) => {
+		const playerIndex = players.findIndex(p => p.key === key);
+		if (playerIndex !== -1) {
+			setCurrentPlayerIndex(playerIndex);
+			setShowOptions(true);
+		}
 	};
+
 
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
@@ -207,30 +215,57 @@ export default function Game() {
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
 					<Image src={tankImage} alt="Tank" fill className="object-cover" />
 					{players.map((player, index) => (
-						<Image key={index}
-							src={fishImage}
-							alt={`Fish ${index + 1}`}
-							width={FISH_SIZE * player.score}
-							height={FISH_SIZE * player.score}
-							className="absolute fish-bob"
+						<div key={index}
 							style={{
+								position: "absolute",
 								top: `${fishPositions[index]?.top}%`,
-								left: `${fishPositions[index]?.left}%`
-							}} />
+								left: `${fishPositions[index]?.left}%`,
+								width: `${Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}px`,
+								height: `${Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}px`,
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+							className="fish-container"
+						>
+							<Image
+								src={fishImage}
+								alt={`Fish ${index + 1}`}
+								width={Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}
+								height={Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}
+								className="fish-bob"
+							/>
+							<span className="text-white text-lg font-bold bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]">
+								{player.key}
+							</span>
+						</div>
 					))}
 
-					{/* Keyframes Animation */}
+
 					<style>
 						{`
-          @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-          }
-          .fish-bob {
-            animation: bob 2s infinite ease-in-out;
-          }
-        `}
+							@keyframes bob {
+								0%, 100% { transform: translateY(0); }
+								50% { transform: translateY(-10px); }
+							}
+							.fish-container {
+								animation: bob 2s infinite ease-in-out;
+							}
+							.fish-label {
+								color: white;
+								font-size: 16px;
+								font-weight: bold;
+								background: black;
+								padding: 2px 6px;
+								border-radius: 4px;
+								opacity: 0.8;
+								margin-bottom: 5px; /* Keeps space between label and fish */
+							}
+						`}
 					</style>
+
+
 				</div>
 				<div className="relative flex w-[350px] h-[610px] flex-col justify-between ">
 					<Image
@@ -269,12 +304,18 @@ export default function Game() {
 								))}
 							</div>
 						) : !feedback ? (
-							<button
-								onClick={handleAnswer}
-								className="w-[100px] h-[100px] bg-[#ACD7C6] text-2xl text-[#684619] font-peaberry"
-							>
-								Enter
-							</button>
+							<div className="flex flex-wrap justify-center gap-4">
+								{players.map((player, index) => (
+									<button
+										key={index}
+										onClick={() => handleAnswer(player.key)}
+										className="w-[100px] p-2 bg-[#ACD7C6] text-xl text-[#684619] font-peaberry rounded-lg hover:bg-[#89bca6] transition"
+									>
+										{player.key}
+									</button>
+								))}
+							</div>
+
 						) : null}
 					</div>
 

@@ -57,13 +57,13 @@ const GameStartPage: React.FC = () => {
 		setFishPositions((prev) => {
 			if (prev.length >= 4) {
 				// Reset to 1 fish
-				return [{ top: 20, left: 30 }];
+				return [{ top: 30, left: 50 }];
 			}
 
 			let newTop, newLeft;
 			do {
-				newTop = Math.random() * 80;
-				newLeft = Math.random() * 80;
+				newTop = 20 + Math.random() * 50;
+				newLeft = 20 + Math.random() * 50;
 			} while (isOverlapping(newTop, newLeft));
 
 			return [...prev, { top: newTop, left: newLeft }];
