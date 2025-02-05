@@ -272,7 +272,7 @@ export default function Game() {
 
 							<span
 								className={`text-white text-lg font-peaberry bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]  
-                        ${currentPlayerIndex === index ? "bg-[#68461B]" : ""}  // Change color when answering`}
+                        ${currentPlayerIndex === index ? "bg-[#684619]" : ""}  // Change color when answering`}
 							>
 								{player.key}
 							</span>
@@ -332,18 +332,12 @@ export default function Game() {
 							</div>
 						) : !feedback ? (
 							<div className="flex flex-wrap justify-center gap-4">
-								{players.map((player, index) => (
-									<button
-										key={index}
-										onClick={() => handleAnswer(player.key)}
-										className="w-[50px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
-									>
-										{player.key}
-									</button>
-								))}
+								<div className="text-xl text-[#856336] font-peaberry">
+									Buzz if you can answer!
+								</div>
 							</div>
-
 						) : null}
+
 					</div>
 
 					{timer === Infinity && (
