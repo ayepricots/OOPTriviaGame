@@ -58,6 +58,7 @@ export default function Game() {
 	const [feedback, setFeedback] = useState<string | null>(null);
 	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, string[]>>({});
 	const [specialMessage, setSpecialMessage] = useState<string | null>(null);
+	const [questionLocked, setQuestionLocked] = useState(false); // 
 
 
 	// For navigation to the feedback page
@@ -130,15 +131,18 @@ export default function Game() {
 
 		window.addEventListener("keydown", handleKeyDown);
 		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, [players, keybinds]);
+	}, [players, keybinds, questionLocked]);
 
 
 	// show options
 	const handleAnswer = (key: string) => {
+		if (questionLocked) return; // prevent another player from answering
+
 		const playerIndex = players.findIndex(p => p.key === key);
 		if (playerIndex !== -1) {
 			setCurrentPlayerIndex(playerIndex);
 			setShowOptions(true);
+			setQuestionLocked(true); // Lock question for this player
 		}
 	};
 
@@ -191,6 +195,7 @@ export default function Game() {
 			setCurrentQuestion(getRandomQuestion());
 			setShowOptions(false);
 			setCurrentPlayerIndex(-1);
+			setQuestionLocked(false); // Unlock for the next question
 		}, 1000);
 	};
 
