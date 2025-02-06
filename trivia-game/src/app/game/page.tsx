@@ -54,6 +54,8 @@ export default function Game() {
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
+	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, string[]>>({});
+
 
 	// For navigation to the feedback page
 	const router = useRouter();
@@ -144,16 +146,19 @@ export default function Game() {
 	const saveGameResults = () => {
 		const gameResults = {
 			players: players.map(player => ({
-				id: player.id,
-				score: player.score,
-				key: player.key,
-				fishImage: player.fishImage.src,
+				id: player.id, // Keep track of player ID
+				score: player.score, // Store score
+				fishSize: Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE), // Calculate fish size
+				key: player.key, // Store key
+				fishImage: player.fishImage.src, // Store fish image
+				incorrectQuestions: incorrectAnswers[player.id] || [], // Store wrong questions
 			})),
 			fishPositions: fishPositions,
 		};
 
 		localStorage.setItem("gameResults", JSON.stringify(gameResults));
 	};
+
 
 
 
@@ -213,6 +218,11 @@ export default function Game() {
 					: p
 				)
 			);
+		} else {
+			setIncorrectAnswers(prev => ({
+				...prev,
+				[currentPlayerIndex]: [...(prev[currentPlayerIndex] || []), currentQuestion.question],
+			}));
 		}
 
 		setTimeout(() => {
