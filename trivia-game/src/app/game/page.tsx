@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // For navigation
+import questions from "@/data/questions.json";
 import Image from "next/image";
 import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
@@ -60,75 +61,13 @@ export default function Game() {
 	// For navigation to the feedback page
 	const router = useRouter();
 
-	const questionsPool: Question[] = [
-		{
-			category: "OOP Basics",
-			question: "What does OOP stand for?",
-			options: ["Object-Oriented Programming", "Open-Operation Protocol", "Object Operation Protocol", "Optimal Object Processing"],
-			correctAnswer: "Object-Oriented Programming",
-		},
-		{
-			category: "OOP Basics",
-			question: "Which of the following is not a principle of OOP?",
-			options: ["Encapsulation", "Polymorphism", "Abstraction", "Compilation"],
-			correctAnswer: "Compilation",
-		},
-		{
-			category: "Encapsulation",
-			question: "Encapsulation is achieved using?",
-			options: ["Classes", "Methods", "Attributes", "All of the above"],
-			correctAnswer: "All of the above",
-		},
-		{
-			category: "Inheritance",
-			question: "What is inheritance in OOP?",
-			options: [
-				"Creating a new class from an existing class",
-				"Copying attributes from one class to another",
-				"Sharing data between two classes",
-				"None of the above",
-			],
-			correctAnswer: "Creating a new class from an existing class",
-		},
-		{
-			category: "Polymorphism",
-			question: "Which type of polymorphism is achieved by method overloading?",
-			options: ["Compile-time", "Run-time", "Dynamic", "None of the above"],
-			correctAnswer: "Compile-time",
-		},
-		{
-			category: "Design Patterns",
-			question: "Which of these is a creational design pattern?",
-			options: ["Singleton", "Observer", "Adapter", "Facade"],
-			correctAnswer: "Singleton",
-		},
-		{
-			category: "OOP Basics",
-			question: "What keyword is used to create an object in Java?",
-			options: ["new", "create", "object", "make"],
-			correctAnswer: "new",
-		},
-		{
-			category: "Inheritance",
-			question: "In Java, which keyword is used to inherit a class?",
-			options: ["extends", "implements", "inherits", "super"],
-			correctAnswer: "extends",
-		},
-		{
-			category: "Polymorphism",
-			question: "Which of these allows overriding a method in a subclass?",
-			options: ["Inheritance", "Encapsulation", "Abstraction", "None of the above"],
-			correctAnswer: "Inheritance",
-		},
-	];
-
 	// filter questions based on category
 	const selectedCategory = gameSettings.category;
 
 	const filteredQuestions: Question[] =
 		selectedCategory === "All Categories" || !selectedCategory
-			? questionsPool
-			: questionsPool.filter((q) => q.category === selectedCategory);
+			? questions
+			: questions.filter((q) => q.category === selectedCategory);
 
 	// Function to get a random question from the filtered list
 	const getRandomQuestion = (): Question | null => {
@@ -158,9 +97,6 @@ export default function Game() {
 
 		localStorage.setItem("gameResults", JSON.stringify(gameResults));
 	};
-
-
-
 
 	// timer countdown 
 	useEffect(() => {
@@ -234,8 +170,6 @@ export default function Game() {
 			setCurrentPlayerIndex(-1);
 		}, 1000);
 	};
-
-
 
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
