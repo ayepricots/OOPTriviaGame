@@ -46,6 +46,7 @@ export default function Game() {
 		Array.from({ length: numPlayers }, (_, i) => ({
 			id: i,
 			score: 1,
+			streak: 0,
 			key: keybinds[i],
 			fishImage: fishImages[i % fishImages.length], // Assign fish images in order
 		}))
@@ -56,6 +57,7 @@ export default function Game() {
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
 	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, string[]>>({});
+	const [specialMessage, setSpecialMessage] = useState<string | null>(null);
 
 
 	// For navigation to the feedback page
@@ -140,33 +142,54 @@ export default function Game() {
 		}
 	};
 
-
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
 
-		if (isCorrect) {
-			setPlayers(prevPlayers =>
-				prevPlayers.map(p => p.key === keybinds[currentPlayerIndex]
-					? { ...p, score: p.score + 0.1 } // Increase by 0.5
-					: p
-				)
-			);
-		} else {
+		// Update player scores and streaks
+		setPlayers(prevPlayers =>
+			prevPlayers.map((p, index) => {
+				if (index === currentPlayerIndex) {
+					const newStreak = isCorrect ? p.streak + 1 : 0; // Reset if incorrect
+
+					// Check streak milestone within the update
+					if (newStreak % 3 === 0 && newStreak !== 0) {
+						const messages = [
+							`Fish ${p.key} is making waves!`,
+							`Watch out! Fish ${p.key} is growing!`,
+							`Fish ${p.key} is pondering!`,
+							`Fish ${p.key} knows their stuff!`
+						];
+						setSpecialMessage(messages[Math.floor(Math.random() * messages.length)]);
+					} else {
+						setSpecialMessage(null)
+					}
+
+					return {
+						...p,
+						score: isCorrect ? p.score + 0.1 : p.score, // Increase by 0.1
+						streak: newStreak,
+					};
+				}
+				return p;
+			})
+		);
+
+		// Track incorrect answers
+		if (!isCorrect) {
 			setIncorrectAnswers(prev => ({
 				...prev,
 				[currentPlayerIndex]: [...(prev[currentPlayerIndex] || []), currentQuestion.question],
 			}));
+			console.log(`Player ${players[currentPlayerIndex]?.key} added to incorrect answers.`);
 		}
 
 		setTimeout(() => {
 			setFeedback(null);
 			setCurrentQuestion(getRandomQuestion());
 			setShowOptions(false);
-
-			// Reset the current player index to none when the next question is shown
 			setCurrentPlayerIndex(-1);
 		}, 1000);
 	};
@@ -216,7 +239,7 @@ export default function Game() {
 
 							<span
 								className={`text-white text-lg font-peaberry bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]  
-                        ${currentPlayerIndex === index ? "bg-[#684619]" : ""}  // Change color when answering`}
+                        ${currentPlayerIndex === index ? "bg-[#4e3413]" : ""}  // Change color when answering`}
 							>
 								{player.key}
 							</span>
@@ -268,7 +291,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[250px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
+										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
 									>
 										{option}
 									</button>
@@ -276,8 +299,8 @@ export default function Game() {
 							</div>
 						) : !feedback ? (
 							<div className="flex flex-wrap justify-center gap-4">
-								<div className="text-xl text-[#856336] font-peaberry">
-									Buzz if you can answer!
+								<div className=" text-xl text-[#856336] font-peaberry text-center">
+									{specialMessage || "Tap your letter to buzz in!"}
 								</div>
 							</div>
 						) : null}
