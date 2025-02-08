@@ -58,15 +58,23 @@ const GameStartPage: React.FC = () => {
     });
   };
 
-  const handleStart = () => {
-    // Save settings before navigation
-    localStorage.setItem(
-      "gameSettings",
-      JSON.stringify({ category, timeLimit, fishPositions })
-    );
+  const handleStart = async () => {
+    localStorage.setItem("gameSettings", JSON.stringify({ category, timeLimit, fishPositions }));
 
-    // Navigate to the game page (replace with your actual game page URL)
-    router.push("/game");
+    try {
+      // const response = await fetch("/api/getTrivia", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ category }),
+      // });
+
+      // const triviaQuestions = await response.json();
+      // localStorage.setItem("triviaQuestions", JSON.stringify(triviaQuestions));
+      console.log("Starting game...");
+      router.push("/game");
+    } catch (error) {
+      console.error("Error fetching trivia:", error);
+    }
   };
 
   return (
