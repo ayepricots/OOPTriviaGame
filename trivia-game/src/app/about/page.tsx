@@ -41,7 +41,7 @@ export default function About() {
 			/>
 
 			{/* Main Content Wrapper */}
-			<div className="relative flex flex-col md:flex-row items-center justify-center gap-6">
+			<div className="relative flex md:flex-row flex-col items-center justify-center gap-6">
 				{/* Main Window */}
 				<div className="relative w-[400px] md:w-[600px] flex justify-center">
 					<h1 className="absolute top-4 left-5 md:top-6 md:left-7 text-xl md:text-4xl text-white font-peaberry">
