@@ -17,7 +17,7 @@ interface Player {
 
 interface GameResults {
 	players: Player[];
-	fishPositions: any; // Adjust type based on your actual data
+	fishPositions: any[]; // Adjust type based on your actual data
 }
 
 export default function Feedback() {
@@ -42,30 +42,54 @@ export default function Feedback() {
 			/>
 
 			<div className="flex space-x-4">
-				{/* Fish Display */}
 				<div className="w-[400px] h-[310px] overflow-hidden relative">
-					<Image src={tankImage} alt="Tank" fill className="object-cover" />
+					<Image src={tankImage} alt="Tank" fill quality={100} className="object-cover" />
 
-					{gameResults?.players?.map((player, index) => (
-						<div
-							key={player.id}
-							className="absolute"
+					{gameResults?.players?.length ? (
+						gameResults.players.map((player, index) => (
+						<div key={index}
 							style={{
-								top: 100 + index * 50,
-								left: 50 + index * 100,
-								width: player.fishSize,
+								position: "absolute",
+								top: `${gameResults.fishPositions[index]?.top}%`,
+								left: `${gameResults.fishPositions[index]?.left}%`,
+								width: `${gameResults.players[index].fishSize}px`,
+								height: `${gameResults.players[index].fishSize}px`,
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								justifyContent: "center",
+								transition: "width 0.5s ease", // Smooth transition for size change
 							}}
+							className="fish-container"
 						>
 							<Image
 								src={player.fishImage}
-								alt={`Player ${player.id} Fish`}
+								alt={`Fish ${index + 1}`}
+								width={gameResults.players[index].fishSize}
+								height={gameResults.players[index].fishSize}
 								quality={100}
-								className="object-cover"
-								width={player.fishSize}
-								height={player.fishSize}
+								className="fish-bob"
 							/>
 						</div>
-					))}
+					))
+					) : (
+						<p className="text-center text-lg text-white">No game results found.</p>
+					)}
+
+
+					<style>
+						{`
+							@keyframes bob {
+								0%, 100% { transform: translateY(0); }
+								50% { transform: translateY(-10px); }
+							}
+							.fish-container {
+								animation: bob 2s infinite ease-in-out;
+							}
+						`}
+					</style>
+
+
 				</div>
 
 				{/* Feedback Display */}
