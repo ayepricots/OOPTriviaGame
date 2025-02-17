@@ -1,75 +1,101 @@
-{
-    "questions": [
-      {
-        "id": 1,
-        "questionText": "What is polymorphism in object-oriented programming?",
-        "answer": "Polymorphism allows objects to be treated as instances of their parent class, enabling dynamic method dispatch.",
-        "category": "OOP",
-        "difficulty": "Medium"
-      },
-      {
-        "id": 2,
-        "questionText": "Which data structure uses the FIFO (First In First Out) principle?",
-        "answer": "Queue",
-        "category": "Data Structures",
-        "difficulty": "Easy"
-      },
-      {
-        "id": 3,
-        "questionText": "What is the time complexity of binary search in a sorted array?",
-        "answer": "O(log n)",
-        "category": "Algorithms",
-        "difficulty": "Easy"
-      },
-      {
-        "id": 4,
-        "questionText": "Which keyword is used to declare a constant in Java?",
-        "answer": "final",
-        "category": "Syntax",
-        "difficulty": "Easy"
-      },
-      {
-        "id": 5,
-        "questionText": "Which of the following is not a feature of Java?",
-        "answer": "Pointers",
-        "category": "Java Basics",
-        "difficulty": "Medium"
-      },
-      {
-        "id": 6,
-        "questionText": "What does the acronym SOLID stand for in software design principles?",
-        "answer": "Single responsibility, Open-closed, Liskov substitution, Interface segregation, Dependency inversion",
-        "category": "Design Patterns",
-        "difficulty": "Hard"
-      },
-      {
-        "id": 7,
-        "questionText": "Which algorithm is used to find the shortest path in a weighted graph?",
-        "answer": "Dijkstra's Algorithm",
-        "category": "Algorithms",
-        "difficulty": "Medium"
-      },
-      {
-        "id": 8,
-        "questionText": "What is the default value of a boolean in Java?",
-        "answer": "false",
-        "category": "Java Basics",
-        "difficulty": "Easy"
-      },
-      {
-        "id": 9,
-        "questionText": "Which of the following is not a type of constructor in Java?",
-        "answer": "Static constructor",
-        "category": "OOP",
-        "difficulty": "Medium"
-      },
-      {
-        "id": 10,
-        "questionText": "Which sorting algorithm is considered the fastest for large datasets?",
-        "answer": "Quick Sort",
-        "category": "Algorithms",
-        "difficulty": "Medium"
-      }
-    ]
-  }
-  
+[
+	{
+		"category": "OOP Basics",
+		"question": "What does OOP stand for?",
+		"options": [
+			"Object-Oriented Programming",
+			"Open-Operation Protocol",
+			"Object Operation Protocol",
+			"Optimal Object Processing"
+		],
+		"correctAnswer": "Object-Oriented Programming"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "Which of the following is not a principle of OOP?",
+		"options": [
+			"Encapsulation",
+			"Polymorphism",
+			"Abstraction",
+			"Compilation"
+		],
+		"correctAnswer": "Compilation"
+	},
+	{
+		"category": "Encapsulation",
+		"question": "Encapsulation is achieved using?",
+		"options": [
+			"Classes",
+			"Methods",
+			"Attributes",
+			"All of the above"
+		],
+		"correctAnswer": "All of the above"
+	},
+	{
+		"category": "Inheritance",
+		"question": "What is inheritance in OOP?",
+		"options": [
+			"Creating a new class from an existing class",
+			"Copying attributes from one class to another",
+			"Sharing data between two classes",
+			"None of the above"
+		],
+		"correctAnswer": "Creating a new class from an existing class"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which type of polymorphism is achieved by method overloading?",
+		"options": [
+			"Compile-time",
+			"Run-time",
+			"Dynamic",
+			"None of the above"
+		],
+		"correctAnswer": "Compile-time"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "Which of these is a creational design pattern?",
+		"options": [
+			"Singleton",
+			"Observer",
+			"Adapter",
+			"Facade"
+		],
+		"correctAnswer": "Singleton"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "What keyword is used to create an object in Java?",
+		"options": [
+			"new",
+			"create",
+			"object",
+			"make"
+		],
+		"correctAnswer": "new"
+	},
+	{
+		"category": "Inheritance",
+		"question": "In Java, which keyword is used to inherit a class?",
+		"options": [
+			"extends",
+			"implements",
+			"inherits",
+			"super"
+		],
+		"correctAnswer": "extends"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of these allows overriding a method in a subclass?",
+		"options": [
+			"Inheritance",
+			"Encapsulation",
+			"Abstraction",
+			"None of the above"
+		],
+		"correctAnswer": "Inheritance"
+	}
+]
