@@ -68,9 +68,9 @@ export default function About() {
 								Object-Oriented Programming (OOP) concepts.
 							</p>
 							<p>
-								Also all art is original. We hope you enjoy our fishies!
+								 All art is original. We hope you enjoy our fishies!
 								</p>
-							<p>Special thanks to Nasser for his guidance and supervision throughout the project.</p>
+							<p>Special thanks to Nasser for his guidance and supervision throughout the project!</p>
 						</div>
 
 						{/* Back Button */}
