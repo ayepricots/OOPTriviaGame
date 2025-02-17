@@ -12,6 +12,8 @@ import startImage from "../../assets/btn_start.png";
 import ivoryfish from "../../assets/ivoryfish.png";
 import ayefish from "../../assets/ayefish.png";
 import richmanfish from "../../assets/richmanfish.png";
+import CategoryDropdown from "../../components/categoryDropdown";
+import TimeDropdown from "../../components/timeDropdown";
 
 const GameStartPage: React.FC = () => {
 	const router = useRouter(); // ✅ Initialize Router
@@ -155,50 +157,18 @@ const GameStartPage: React.FC = () => {
 					{/* Dropdowns */}
 					<div className="space-y-4 mt-20">
 						{/* Category Dropdown */}
-						<div className="flex flex-col">
-							<label className="text-3xl font-peaberry mb-1 text-[#68461A]">
-								Category
-							</label>
-							<div className="relative">
-								<select
-									className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#848266] rounded-lg font-peaberry appearance-none text-xl"
-									value={category}
-									onChange={(e) => setCategory(e.target.value)}
-								>
-									<option value="All Categories">All Categories ☝️</option>
-									<option value="OOP Basics">OOP Basics 🏗️</option>
-									<option value="Encapsulation">Encapsulation 🔒</option>
-									<option value="Inheritance">Inheritance 🧬</option>
-									<option value="Polymorphism">Polymorphism 🎭</option>
-									<option value="Design Patterns">Design Patterns 🏛️</option>
-
-								</select>
-								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>
-								</div>
+						<div className="relative">
+							<div className="flex flex-col">
+								<label className="text-3xl font-peaberry mb-1 text-[#68461A]">Category</label>
+								<CategoryDropdown value={category} onChange={setCategory} />
 							</div>
 						</div>
 
 						{/* Time Limit Dropdown */}
-						<div className="flex flex-col">
-							<label className="font-peaberry mb-1 text-[#68461A] text-3xl">
-								Time limit
-							</label>
-							<div className="relative">
-								<select
-									className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#848266] rounded-lg font-peaberry appearance-none text-xl"
-									value={timeLimit}
-									onChange={(e) => setTimeLimit(e.target.value)}
-								>
-									<option value="5min">5 min (Standard) ⏳</option>
-									<option value="2min">2 min (Think Fast) ⚡</option>
-									<option value="10min">10 min (Relaxed) 😌</option>
-									<option value="Zen">Zen (No limit) 🧘</option>
-
-								</select>
-								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>
-								</div>
+						<div className="relative">
+							<div className="flex flex-col">
+								<label className="font-peaberry mb-1 text-[#68461A] text-3xl">Time limit</label>
+								<TimeDropdown value={timeLimit} onChange={setTimeLimit} />
 							</div>
 						</div>
 					</div>
