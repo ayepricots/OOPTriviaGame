@@ -336,7 +336,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
+										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] cursor-pointer hover:scale-110 transition-transform"
 									>
 										{option}
 									</button>
@@ -359,7 +359,7 @@ export default function Game() {
 									saveGameResults();
 									router.push("/feedback");
 								}}
-								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] transition"
+								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] cursor-pointer hover:scale-110 transition-transform"
 							>
 								Done
 							</button>
