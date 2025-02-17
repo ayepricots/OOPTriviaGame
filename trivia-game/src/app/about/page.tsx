@@ -56,17 +56,21 @@ export default function About() {
 					/>
 
 					<div className="absolute top-20 md:top-32 flex justify-center flex-col w-[340px] md:w-[500px] overflow-visible">
-						<div className="text-center md:text-2xl text-yellow-900 font-peaberry overflow-y-auto max-h-[260px] md:max-h-[380px] scrollbar-hide">
+						<div className="text-center md:text-2xl space-y-5 text-yellow-900 font-peaberry overflow-y-auto max-h-[260px] md:max-h-[380px] scrollable-container">
 							<p>
 								Pond Ponder is a summer project developed by the Powerpuff
 								People team: Aye Thu, Richman Tan, and Ivory Huang.
 							</p>
+		
 							<p>
 								As second-year developers, we wanted to create a fun and
 								engaging trivia game to help future students practice
 								Object-Oriented Programming (OOP) concepts.
 							</p>
-							<p>Special thanks to Nasser for his guidance throughout the project.</p>
+							<p>
+								Also all art is original. We hope you enjoy our fishies!
+								</p>
+							<p>Special thanks to Nasser for his guidance and supervision throughout the project.</p>
 						</div>
 
 						{/* Back Button */}
