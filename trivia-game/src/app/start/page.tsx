@@ -18,6 +18,16 @@ import TimeDropdown from "../../components/timeDropdown";
 const GameStartPage: React.FC = () => {
 	const router = useRouter(); // ✅ Initialize Router
 
+	const playClickSound = () => {
+		const clickAudio = new Audio('/audio/click.wav');
+		clickAudio.play();
+	};
+
+	const playBubbleSound = () => {
+		const bubbleAudio = new Audio('/audio/bubble.wav');
+		bubbleAudio.play();
+	}
+
 	// State for game settings
 	const [category, setCategory] = useState("All Categories");
 	const [timeLimit, setTimeLimit] = useState("5min");
@@ -178,7 +188,10 @@ const GameStartPage: React.FC = () => {
 						<span className="font-peaberry text-[#68461A] text-3xl">
 							Players: {fishPositions.length}/4
 						</span>
-						<div className="w-[30px] h-[30px]" onClick={handleAddPlayer}>
+						<div className="w-[30px] h-[30px]" onClick={() => {
+							handleAddPlayer();
+							playClickSound();
+						}}>
 							<Image
 								src={btnAdd}
 								alt="Add"
@@ -197,7 +210,10 @@ const GameStartPage: React.FC = () => {
 							alt="Start Button"
 							quality={100}
 							className="cursor-pointer hover:scale-105 transition-transform height-[200px] width-[200px]"
-							onClick={handleStart}
+							onClick={() => {
+								handleStart();
+								playBubbleSound();
+							}}
 						/>
 					</div>
 				</div>

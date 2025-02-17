@@ -21,6 +21,40 @@ interface Question {
 
 export default function Game() {
 
+	// cute background music!
+	useEffect(() => {
+		const music = new Audio('/audio/dewwy.wav');
+		music.loop = true; // Loop the music
+		music.volume = 0.5; // Adjust volume as needed
+		music.play();
+
+		return () => {
+			music.pause();
+			music.currentTime = 0; // Reset audio when leaving page
+		};
+	}, []);
+
+	// buzzer sound
+	const playBuzzerSound = () => {
+		const buzzerAudio = new Audio('/audio/buzzer.wav');
+		buzzerAudio.volume = 0.5; // Adjust volume as needed
+		buzzerAudio.play();
+	};
+
+	// correct sound
+	const playCorrectSound = () => {
+		const correctAudio = new Audio('/audio/correct.wav');
+		const cronchAudio = new Audio('/audio/cronch.wav');
+		correctAudio.play();
+		// cronchAudio.play();
+	}
+
+	// incorrect sound
+	const playIncorrectSound = () => {
+		const incorrectAudio = new Audio('/audio/incorrect.wav');
+		incorrectAudio.play();
+	}
+
 	// retrieve from local storage
 	const gameSettings = JSON.parse(localStorage.getItem("gameSettings") || "{}");
 	const [timer, setTimer] = useState<number>(
@@ -136,8 +170,11 @@ export default function Game() {
 
 	// show options
 	const handleAnswer = (key: string) => {
-		if (questionLocked) return; // prevent another player from answering
+		if (questionLocked) {
+			return; // prevent another player from answering
+		}
 
+		playBuzzerSound(); // Play buzzer sound
 		const playerIndex = players.findIndex(p => p.key === key);
 		if (playerIndex !== -1) {
 			setCurrentPlayerIndex(playerIndex);
@@ -149,8 +186,11 @@ export default function Game() {
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
+
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
+		// Play sound based on correctness
+		isCorrect ? playCorrectSound() : playIncorrectSound();
 
 		// Update player scores and streaks
 		setPlayers(prevPlayers =>
