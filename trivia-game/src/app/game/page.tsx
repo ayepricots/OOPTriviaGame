@@ -52,6 +52,7 @@ export default function Game() {
 	// incorrect sound
 	const playIncorrectSound = () => {
 		const incorrectAudio = new Audio('/audio/incorrect.wav');
+		incorrectAudio.volume = 0.5; // Adjust volume as needed
 		incorrectAudio.play();
 	}
 
