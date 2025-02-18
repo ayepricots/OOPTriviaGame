@@ -39,7 +39,17 @@ export default function Feedback() {
 		const storedResults = localStorage.getItem("gameResults");
 		if (storedResults) {
 			const parsedResults: GameResults = JSON.parse(storedResults);
-			setGameResults(parsedResults);
+
+			// Remove duplicate incorrect questions for each player
+			const updatedResults = {
+				...parsedResults,
+				players: parsedResults.players.map((player) => ({
+					...player,
+					incorrectQuestions: [...new Set(player.incorrectQuestions)], // Remove duplicates
+				})),
+			};
+
+			setGameResults(updatedResults);
 		}
 	}, []);
 	
@@ -107,8 +117,8 @@ export default function Feedback() {
 					<style>
 						{`
 							@keyframes bob {
-								0% { transform: translateY(0); }
-								100% { transform: translateY(-10px); }
+								0%, 100% { transform: translateY(0); }
+								50% { transform: translateY(-10px); }
 							}
 
 							@keyframes spin {
