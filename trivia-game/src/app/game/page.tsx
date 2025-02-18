@@ -84,7 +84,7 @@ export default function Game() {
 
 	// Initialize players **after** numPlayers is set
 	const fishImages = [ivoryfish, fishImage, ayefish, richmanfish];
-	
+
 	useEffect(() => {
 		if (numPlayers > 0) {
 			setPlayers(
@@ -106,7 +106,7 @@ export default function Game() {
 
 	// keybinds for up to 4 players
 	const keybinds = ["A", "F", "J", "L"].slice(0, numPlayers);
-  
+
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
@@ -300,12 +300,11 @@ export default function Game() {
 								width={Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}
 								height={Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE)}
 								quality={100}
-								className="fish-bob"
+								className={`${currentPlayerIndex === index ? "winner-fish-container" : ""} fish-bob`}
 							/>
 
 							<span
-								className={`text-white text-lg font-peaberry bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]  
-                        ${currentPlayerIndex === index ? "bg-[#432d10]" : ""}  // Change color when answering`}
+								className={`text-white text-lg font-peaberry bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]`}
 							>
 								{player.key}
 							</span>
@@ -321,6 +320,15 @@ export default function Game() {
 							}
 							.fish-container {
 								animation: bob 2s infinite ease-in-out;
+							}
+							
+							@keyframes spin {
+								0% { transform: rotate(0deg); }
+								100% { transform: rotate(360deg); }
+							}
+
+							.winner-fish-container {
+								animation: spin 2s linear infinite;
 							}
 						`}
 					</style>
