@@ -3,23 +3,35 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Import Next.js router
 import Image from "next/image";
-import backgroundImage from "../../assets/bg_dim.png";
-import tankImage from "../../assets/window_tank.png";
-import btnAdd from "../../assets/btn_add.png";
-import windowLong from "../../assets/window_long.png";
-import fishImage from "../../assets/fish.jpeg";
-import startImage from "../../assets/btn_start.png";
-import ivoryfish from "../../assets/ivoryfish.png";
-import ayefish from "../../assets/ayefish.png";
-import richmanfish from "../../assets/richmanfish.png";
+import backgroundImage from "@/assets/bg_dim.png";
+import tankImage from "@/assets/window_tank.png";
+import btnAdd from "@/assets/btn_add.png";
+import windowLong from "@/assets/window_long.png";
+import fishImage from "@/assets/ayefish2.png";
+import startImage from "@/assets/btn_start.png";
+import ivoryfish from "@/assets/ivoryfish.png";
+import ayefish from "@/assets/ayefish.png";
+import richmanfish from "@/assets/richmanfish.png";
+import CategoryDropdown from "@/components/categoryDropdown";
+import TimeDropdown from "@/components/timeDropdown";
 
 const GameStartPage: React.FC = () => {
 	const router = useRouter(); // ✅ Initialize Router
 
+	const playClickSound = () => {
+		const clickAudio = new Audio('/audio/click.wav');
+		clickAudio.play();
+	};
+
+	const playBubbleSound = () => {
+		const bubbleAudio = new Audio('/audio/bubble.wav');
+		bubbleAudio.play();
+	}
+
 	// State for game settings
 	const [category, setCategory] = useState("All Categories");
 	const [timeLimit, setTimeLimit] = useState("5min");
-	const fishTypes = [fishImage, ivoryfish, ayefish, richmanfish];
+	const fishTypes = [ivoryfish, fishImage, ayefish, richmanfish];
 
 
 	const [fishPositions, setFishPositions] = useState<
@@ -155,50 +167,18 @@ const GameStartPage: React.FC = () => {
 					{/* Dropdowns */}
 					<div className="space-y-4 mt-20">
 						{/* Category Dropdown */}
-						<div className="flex flex-col">
-							<label className="text-3xl font-peaberry mb-1 text-[#68461A]">
-								Category
-							</label>
-							<div className="relative">
-								<select
-									className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#848266] rounded-lg font-peaberry appearance-none text-xl"
-									value={category}
-									onChange={(e) => setCategory(e.target.value)}
-								>
-									<option value="All Categories">All Categories ☝️</option>
-									<option value="OOP Basics">OOP Basics 🏗️</option>
-									<option value="Encapsulation">Encapsulation 🔒</option>
-									<option value="Inheritance">Inheritance 🧬</option>
-									<option value="Polymorphism">Polymorphism 🎭</option>
-									<option value="Design Patterns">Design Patterns 🏛️</option>
-
-								</select>
-								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>
-								</div>
+						<div className="relative">
+							<div className="flex flex-col">
+								<label className="text-3xl font-peaberry mb-1 text-[#68461A]">Category</label>
+								<CategoryDropdown value={category} onChange={setCategory} />
 							</div>
 						</div>
 
 						{/* Time Limit Dropdown */}
-						<div className="flex flex-col">
-							<label className="font-peaberry mb-1 text-[#68461A] text-3xl">
-								Time limit
-							</label>
-							<div className="relative">
-								<select
-									className="w-full bg-[#D9D9D9] text-[#68461A] px-4 py-2 border-[2px] border-[#848266] rounded-lg font-peaberry appearance-none text-xl"
-									value={timeLimit}
-									onChange={(e) => setTimeLimit(e.target.value)}
-								>
-									<option value="5min">5 min (Standard) ⏳</option>
-									<option value="2min">2 min (Think Fast) ⚡</option>
-									<option value="10min">10 min (Relaxed) 😌</option>
-									<option value="Zen">Zen (No limit) 🧘</option>
-
-								</select>
-								<div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
-									<span className="text-[#4E4E4E] font-bold">&#x25BC;</span>
-								</div>
+						<div className="relative">
+							<div className="flex flex-col">
+								<label className="font-peaberry mb-1 text-[#68461A] text-3xl">Time limit</label>
+								<TimeDropdown value={timeLimit} onChange={setTimeLimit} />
 							</div>
 						</div>
 					</div>
@@ -208,7 +188,10 @@ const GameStartPage: React.FC = () => {
 						<span className="font-peaberry text-[#68461A] text-3xl">
 							Players: {fishPositions.length}/4
 						</span>
-						<div className="w-[30px] h-[30px]" onClick={handleAddPlayer}>
+						<div className="w-[30px] h-[30px]" onClick={() => {
+							handleAddPlayer();
+							playClickSound();
+						}}>
 							<Image
 								src={btnAdd}
 								alt="Add"
@@ -227,7 +210,10 @@ const GameStartPage: React.FC = () => {
 							alt="Start Button"
 							quality={100}
 							className="cursor-pointer hover:scale-105 transition-transform height-[200px] width-[200px]"
-							onClick={handleStart}
+							onClick={() => {
+								handleStart();
+								playBubbleSound();
+							}}
 						/>
 					</div>
 				</div>

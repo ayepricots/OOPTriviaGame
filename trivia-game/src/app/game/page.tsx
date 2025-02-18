@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // For navigation
 import questions from "@/data/questions.json";
 import Image from "next/image";
-import backgroundImage from "../../assets/bg_dim.png";
-import tankImage from "../../assets/window_tank.png";
-import windowLong from "../../assets/window_long.png";
-import fishImage from "../../assets/fish.jpeg";
-import ivoryfish from "../../assets/ivoryfish.png";
-import ayefish from "../../assets/ayefish.png";
-import richmanfish from "../../assets/richmanfish.png";
+import backgroundImage from "@/assets/bg_dim.png";
+import tankImage from "@/assets/window_tank.png";
+import windowLong from "@/assets/window_long.png";
+import fishImage from "@/assets/ayefish2.png";
+import ivoryfish from "@/assets/ivoryfish.png";
+import ayefish from "@/assets/ayefish.png";
+import richmanfish from "@/assets/richmanfish.png";
 
 interface Question {
 	category: string;
@@ -21,17 +21,84 @@ interface Question {
 
 export default function Game() {
 
-	// retrieve from local storage
-	const gameSettings = JSON.parse(localStorage.getItem("gameSettings") || "{}");
-	const [timer, setTimer] = useState<number>(
-		gameSettings.timeLimit === "2min" ? 120 :   // 120s = 2 min
-			gameSettings.timeLimit === "5min" ? 300 :   // 300s = 5 min (default)
-				gameSettings.timeLimit === "10min" ? 600 :  // 600s = 10 min
-					Infinity // Zen Mode (No timer)
-	);
-	const fishPositions = gameSettings.fishPositions || [];
-	const numPlayers = Math.min(fishPositions.length, 4);
+	// cute background music!
+	useEffect(() => {
+		const music = new Audio('/audio/dewwy.wav');
+		music.loop = true; // Loop the music
+		music.volume = 0.5; // Adjust volume as needed
+		music.play();
 
+		return () => {
+			music.pause();
+			music.currentTime = 0; // Reset audio when leaving page
+		};
+	}, []);
+
+	// buzzer sound
+	const playBuzzerSound = () => {
+		const buzzerAudio = new Audio('/audio/buzzer.wav');
+		buzzerAudio.volume = 0.5; // Adjust volume as needed
+		buzzerAudio.play();
+	};
+
+	// correct sound
+	const playCorrectSound = () => {
+		const correctAudio = new Audio('/audio/correct.wav');
+		const cronchAudio = new Audio('/audio/cronch.wav');
+		correctAudio.play();
+		// cronchAudio.play();
+	}
+
+	// incorrect sound
+	const playIncorrectSound = () => {
+		const incorrectAudio = new Audio('/audio/incorrect.wav');
+		incorrectAudio.volume = 0.5; // Adjust volume as needed
+		incorrectAudio.play();
+	}
+
+	const [gameSettings, setGameSettings] = useState<{ timeLimit?: string; fishPositions?: any[]; category?: string; }>({});
+	const [timer, setTimer] = useState<number>(300); // Default to 5 min Mode
+	const [fishPositions, setFishPositions] = useState<any[]>([]);
+	const [numPlayers, setNumPlayers] = useState<number>(0);
+	const [players, setPlayers] = useState<any[]>([]);
+
+	useEffect(() => {
+		const settings = JSON.parse(localStorage.getItem("gameSettings") || "{}");
+		setGameSettings(settings);
+		console.log("Game settings loaded:", settings);
+
+		// Set timer based on game settings
+		setTimer(
+			settings.timeLimit === "2min" ? 120 :
+				settings.timeLimit === "10min" ? 600 :
+					settings.timeLimit === "Zen" ? Infinity :
+						300 // Default to 5 min
+		);
+
+		const fishPositions = settings.fishPositions || [];
+		const numPlayers = Math.min(fishPositions.length, 4);
+
+		setFishPositions(fishPositions);
+		setNumPlayers(numPlayers);
+	}, []);
+
+	// Initialize players **after** numPlayers is set
+	const fishImages = [ivoryfish, fishImage, ayefish, richmanfish];
+	
+	useEffect(() => {
+		if (numPlayers > 0) {
+			setPlayers(
+				Array.from({ length: numPlayers }, (_, i) => ({
+					id: i,
+					score: 1,
+					streak: 0,
+					key: ["A", "F", "J", "L"][i], // Assign keybinds
+					fishImage: fishImages[i % fishImages.length], // Assign fish images
+				}))
+			);
+			console.log("Players initialized:", players);
+		}
+	}, [numPlayers]); // Runs when numPlayers updates
 
 	// fish size
 	const FISH_SIZE = 75;
@@ -39,19 +106,7 @@ export default function Game() {
 
 	// keybinds for up to 4 players
 	const keybinds = ["A", "F", "J", "L"].slice(0, numPlayers);
-
-	// fish and player states
-	const fishImages = [fishImage, ivoryfish, ayefish, richmanfish];
-	const [players, setPlayers] = useState(
-		Array.from({ length: numPlayers }, (_, i) => ({
-			id: i,
-			score: 1,
-			streak: 0,
-			key: keybinds[i],
-			fishImage: fishImages[i % fishImages.length], // Assign fish images in order
-		}))
-	);
-
+  
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
@@ -136,8 +191,11 @@ export default function Game() {
 
 	// show options
 	const handleAnswer = (key: string) => {
-		if (questionLocked) return; // prevent another player from answering
+		if (questionLocked) {
+			return; // prevent another player from answering
+		}
 
+		playBuzzerSound(); // Play buzzer sound
 		const playerIndex = players.findIndex(p => p.key === key);
 		if (playerIndex !== -1) {
 			setCurrentPlayerIndex(playerIndex);
@@ -149,8 +207,11 @@ export default function Game() {
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
+
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
+		// Play sound based on correctness
+		isCorrect ? playCorrectSound() : playIncorrectSound();
 
 		// Update player scores and streaks
 		setPlayers(prevPlayers =>
@@ -244,7 +305,7 @@ export default function Game() {
 
 							<span
 								className={`text-white text-lg font-peaberry bg-[#6D835A] px-2 rounded opacity-80 mt-[-20px]  
-                        ${currentPlayerIndex === index ? "bg-[#4e3413]" : ""}  // Change color when answering`}
+                        ${currentPlayerIndex === index ? "bg-[#432d10]" : ""}  // Change color when answering`}
 							>
 								{player.key}
 							</span>
@@ -296,7 +357,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
+										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] cursor-pointer hover:scale-110 transition-transform"
 									>
 										{option}
 									</button>
@@ -319,7 +380,7 @@ export default function Game() {
 									saveGameResults();
 									router.push("/feedback");
 								}}
-								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] transition"
+								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] cursor-pointer hover:scale-110 transition-transform"
 							>
 								Done
 							</button>

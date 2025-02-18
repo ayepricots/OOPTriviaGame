@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import backgroundImage from "../../assets/bg_dim.png";
-import tankImage from "../../assets/window_tank.png";
-import windowLong from "../../assets/window_long.png";
-import playImage from "../../assets/btn_play.png";
-import quitImage from "../../assets/btn_quit.png";
+import backgroundImage from "@/assets/bg_dim.png";
+import tankImage from "@/assets/window_tank.png";
+import windowLong from "@/assets/window_long.png";
+import playImage from "@/assets/btn_play.png";
+import quitImage from "@/assets/btn_quit.png";
 
 interface Player {
 	id: string;
@@ -21,6 +21,12 @@ interface Player {
 interface GameResults {
 	players: Player[];
 	fishPositions: any[]; // Adjust type based on your actual data
+
+interface Question {
+	category: string;
+	question: string;
+	options: string[];
+	correctAnswer: string;
 }
 
 export default function Feedback() {
