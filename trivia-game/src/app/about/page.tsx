@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import backgroundImage from '../../assets/bg_dim.png';
-import windowSquare from '../../assets/window_square.png';
-import buttonBack from '../../assets/btn_back.png';
+import backgroundImage from '@/assets/bg_dim.png';
+import windowSquare from '@/assets/window_square.png';
+import buttonBack from '@/assets/btn_back.png';
 
 export default function About() {
 	const playClickSound = () => {

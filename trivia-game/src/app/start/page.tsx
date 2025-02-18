@@ -3,17 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Import Next.js router
 import Image from "next/image";
-import backgroundImage from "../../assets/bg_dim.png";
-import tankImage from "../../assets/window_tank.png";
-import btnAdd from "../../assets/btn_add.png";
-import windowLong from "../../assets/window_long.png";
-import fishImage from "../../assets/ayefish2.png";
-import startImage from "../../assets/btn_start.png";
-import ivoryfish from "../../assets/ivoryfish.png";
-import ayefish from "../../assets/ayefish.png";
-import richmanfish from "../../assets/richmanfish.png";
-import CategoryDropdown from "../../components/categoryDropdown";
-import TimeDropdown from "../../components/timeDropdown";
+import backgroundImage from "@/assets/bg_dim.png";
+import tankImage from "@/assets/window_tank.png";
+import btnAdd from "@/assets/btn_add.png";
+import windowLong from "@/assets/window_long.png";
+import fishImage from "@/assets/fish.jpeg";
+import startImage from "@/assets/btn_start.png";
+import ivoryfish from "@/assets/ivoryfish.png";
+import ayefish from "@/assets/ayefish.png";
+import richmanfish from "@/assets/richmanfish.png";
 
 const GameStartPage: React.FC = () => {
 	const router = useRouter(); // ✅ Initialize Router

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import backgroundImage from "../../assets/bg_dim.png";
-import tankImage from "../../assets/window_tank.png";
-import windowLong from "../../assets/window_long.png";
-import fish1 from "../../assets/fish_1_win.png";
-import fish2 from "../../assets/fish_1.png";
+import backgroundImage from "@/assets/bg_dim.png";
+import tankImage from "@/assets/window_tank.png";
+import windowLong from "@/assets/window_long.png";
+import fish1 from "@/assets/fish_1_win.png";
+import fish2 from "@/assets/fish_1.png";
 
 interface Question {
 	category: string;

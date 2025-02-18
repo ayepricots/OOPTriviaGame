@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import backgroundImage from '../assets/bg_dim.png';
-import windowSquareAndTitle from '../assets/window_square_and_title.png';
-import playBtn from '../assets/txt_play.png';
-import aboutBtn from '../assets/txt_aboutus.png';
+import backgroundImage from '@/assets/bg_dim.png';
+import windowSquareAndTitle from '@/assets/window_square_and_title.png';
+import playBtn from '@/assets/txt_play.png';
+import aboutBtn from '@/assets/txt_aboutus.png';
 
 export default function Home() {
 	const playBubbleSound = () => {
