@@ -143,7 +143,7 @@ const GameStartPage: React.FC = () => {
 
 			{/* Clickable Top-Left Image */}
 			<div
-					className="absolute top-4 left-4 w-[80px] h-[80px] cursor-pointer hover:scale-110 transition-transform"
+					className="absolute top-4 left-4 w-[50px] h-[50px] cursor-pointer hover:scale-110 transition-transform"
 					onClick={handleTutorial} // ✅ Clicking this image triggers handleTutorial
 				>
 					<Image
