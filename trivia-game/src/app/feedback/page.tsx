@@ -34,6 +34,24 @@ export default function Feedback() {
 	const [gameResults, setGameResults] = useState<GameResults | null>(null);
 	const [largestFishIndices, setLargestFishIndices] = useState<number[]>([]);
 
+	useEffect(() => {
+		const music = new Audio('/audio/its_not_showtime.wav');
+		music.loop = true; // Loop the music
+		music.volume = 0.5; // Adjust volume as needed
+		music.play();
+
+		return () => {
+			music.pause();
+			music.currentTime = 0; // Reset audio when leaving page
+		};
+	}, []);
+
+	// click sound
+	const playClickSound = () => {
+		const clickAudio = new Audio('/audio/click.wav');
+		clickAudio.play();
+	}
+
 	// Load gameResults from localStorage on client side
 	useEffect(() => {
 		const storedResults = localStorage.getItem("gameResults");
@@ -195,6 +213,7 @@ export default function Feedback() {
 								src={playImage} 
 								alt="Play Button" 
 								className="cursor-pointer h-[45px] w-full hover:scale-105 transition-transform" 
+								onClick={playClickSound}
 								/>
 							</Link>
 							<Link href="/">
@@ -202,6 +221,7 @@ export default function Feedback() {
 								src={quitImage} 
 								alt="Quit Button" 
 								className="ml-2 cursor-pointer hover:scale-105 transition-transform h-[45px] w-full" 
+								onClick={playClickSound}
 								/>
 							</Link>
 						</div>
