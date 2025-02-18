@@ -8,7 +8,7 @@ import tankImage from "../../assets/window_tank.png";
 import windowLong from "../../assets/window_long.png";
 import playImage from "../../assets/btn_play.png";
 import quitImage from "../../assets/btn_quit.png";
-//test: trying to change the .PNG to .png
+//test: trying to change the .PNG to .png - delete then re add next commit
 
 interface Player {
 	id: string;
