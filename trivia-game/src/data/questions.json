@@ -97,5 +97,379 @@
 			"None of the above"
 		],
 		"correctAnswer": "Inheritance"
-	}
+	},
+	{
+		"category": "OOP Basics",
+		"question": "Which of the following is a characteristic of OOP?",
+		"options": [
+			"Modularization",
+			"Interfacing",
+			"Single Responsibility",
+			"All of the above"
+		],
+		"correctAnswer": "All of the above"
+	},
+	{
+		"category": "Encapsulation",
+		"question": "Which of these is true about encapsulation?",
+		"options": [
+			"Encapsulation hides the implementation details",
+			"Encapsulation allows inheritance",
+			"Encapsulation helps in method overloading",
+			"Encapsulation promotes loose coupling"
+		],
+		"correctAnswer": "Encapsulation hides the implementation details"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of the following is true about polymorphism in OOP?",
+		"options": [
+			"It allows objects of different classes to be treated as objects of a common superclass",
+			"It allows methods to behave differently based on the object they are invoked on",
+			"It allows method overriding",
+			"All of the above"
+		],
+		"correctAnswer": "All of the above"
+	},
+	{
+		"category": "Inheritance",
+		"question": "Which keyword is used in Java to refer to the parent class?",
+		"options": [
+			"super",
+			"this",
+			"parent",
+			"base"
+		],
+		"correctAnswer": "super"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "Which of these is a structural design pattern?",
+		"options": [
+			"Decorator",
+			"Singleton",
+			"Observer",
+			"Strategy"
+		],
+		"correctAnswer": "Decorator"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "What is the primary benefit of OOP?",
+		"options": [
+			"Code reuse and modularity",
+			"Faster code execution",
+			"Decreased memory usage",
+			"Increased security"
+		],
+		"correctAnswer": "Code reuse and modularity"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which type of polymorphism is achieved by method overriding?",
+		"options": [
+			"Compile-time",
+			"Run-time",
+			"Static",
+			"Dynamically bound"
+		],
+		"correctAnswer": "Run-time"
+	},
+	{
+		"category": "Abstraction",
+		"question": "What is the purpose of abstraction in OOP?",
+		"options": [
+			"To hide complex implementation details from the user",
+			"To reduce code size",
+			"To allow access to private methods",
+			"To ensure that the implementation details are always visible"
+		],
+		"correctAnswer": "To hide complex implementation details from the user"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "Which of these design patterns deals with object creation?",
+		"options": [
+			"Factory Method",
+			"Observer",
+			"Composite",
+			"State"
+		],
+		"correctAnswer": "Factory Method"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "Which of the following allows you to prevent method overriding?",
+		"options": [
+			"final",
+			"static",
+			"private",
+			"abstract"
+		],
+		"correctAnswer": "final"
+	},
+	{
+		"category": "Inheritance",
+		"question": "Which of the following is not possible with inheritance?",
+		"options": [
+			"Accessing parent class fields in child class",
+			"Overriding parent class methods in child class",
+			"Accessing private fields of the parent class",
+			"Using the parent class constructor"
+		],
+		"correctAnswer": "Accessing private fields of the parent class"
+	},
+	{
+		"category": "Encapsulation",
+		"question": "In Java, what access modifier is commonly used to encapsulate data within a class?",
+		"options": [
+			"private",
+			"public",
+			"protected",
+			"final"
+		],
+		"correctAnswer": "private"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of the following is a benefit of polymorphism?",
+		"options": [
+			"Reduced complexity",
+			"Increased flexibility and reusability",
+			"Prevents inheritance",
+			"Requires fewer classes"
+		],
+		"correctAnswer": "Increased flexibility and reusability"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "Which design pattern provides a way to create a single instance of a class?",
+		"options": [
+			"Singleton",
+			"Factory Method",
+			"Observer",
+			"Builder"
+		],
+		"correctAnswer": "Singleton"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of the following allows different classes to be treated as instances of the same class?",
+		"options": [
+			"Inheritance",
+			"Abstraction",
+			"Polymorphism",
+			"Encapsulation"
+		],
+		"correctAnswer": "Polymorphism"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "What is the difference between a class and an object in OOP?",
+		"options": [
+			"A class is an instance, an object is a blueprint",
+			"A class defines the structure and behavior, an object is an instance of the class",
+			"An object defines the structure, a class is an instance",
+			"None of the above"
+		],
+		"correctAnswer": "A class defines the structure and behavior, an object is an instance of the class"
+	},
+	{
+		"category": "Abstraction",
+		"question": "Which of the following can be used to achieve abstraction in Java?",
+		"options": [
+			"Abstract classes",
+			"Interfaces",
+			"Both abstract classes and interfaces",
+			"None of the above"
+		],
+		"correctAnswer": "Both abstract classes and interfaces"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "What does it mean to say that a class is 'abstract'?",
+		"options": [
+			"It cannot have methods",
+			"It cannot be instantiated directly",
+			"It must be used as a superclass",
+			"It has no constructors"
+		],
+		"correctAnswer": "It cannot be instantiated directly"
+	},
+	{
+		"category": "Inheritance",
+		"question": "Which of the following is true about multiple inheritance in Java?",
+		"options": [
+			"Java supports multiple inheritance through classes",
+			"Java supports multiple inheritance through interfaces",
+			"Multiple inheritance is allowed only for abstract classes",
+			"Java does not support inheritance"
+		],
+		"correctAnswer": "Java supports multiple inheritance through interfaces"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of the following is an example of runtime polymorphism?",
+		"options": [
+			"Method overloading",
+			"Method overriding",
+			"Constructor overloading",
+			"Static method binding"
+		],
+		"correctAnswer": "Method overriding"
+	},
+	{
+		"category": "Abstraction",
+		"question": "What is the purpose of abstract methods in Java?",
+		"options": [
+			"To allow for code reusability",
+			"To prevent class instantiation",
+			"To define a method that must be implemented by subclasses",
+			"To define a method that can be used by all classes"
+		],
+		"correctAnswer": "To define a method that must be implemented by subclasses"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "What is the main goal of the Singleton design pattern?",
+		"options": [
+			"To ensure a class has only one instance and provide a global access point",
+			"To allow dynamic object creation",
+			"To create a family of related objects",
+			"To provide multiple instances of a class"
+		],
+		"correctAnswer": "To ensure a class has only one instance and provide a global access point"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of the following allows you to use the same method name for different functionalities?",
+		"options": [
+			"Overloading",
+			"Overriding",
+			"Encapsulation",
+			"Abstraction"
+		],
+		"correctAnswer": "Overloading"
+	},
+	{
+		"category": "Encapsulation",
+		"question": "What is a common reason to use getters and setters in Java?",
+		"options": [
+			"To directly access private fields",
+			"To modify class behavior",
+			"To allow controlled access to private fields",
+			"To prevent method overloading"
+		],
+		"correctAnswer": "To allow controlled access to private fields"
+	},
+	{
+		"category": "Inheritance",
+		"question": "In Java, what happens if a child class does not override a method from the parent class?",
+		"options": [
+			"The child class will automatically inherit the method",
+			"The parent class method is hidden in the child class",
+			"The child class will cause a compile-time error",
+			"The parent method will be removed"
+		],
+		"correctAnswer": "The child class will automatically inherit the method"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "Which of these design patterns allows the creation of objects without specifying the exact class of object that will be created?",
+		"options": [
+			"Factory Method",
+			"Singleton",
+			"Observer",
+			"Decorator"
+		],
+		"correctAnswer": "Factory Method"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "What is an interface in Java?",
+		"options": [
+			"A class that defines abstract methods",
+			"A class that defines only concrete methods",
+			"A collection of related methods without implementation",
+			"A class with only static methods"
+		],
+		"correctAnswer": "A collection of related methods without implementation"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "What is method overriding in Java?",
+		"options": [
+			"Defining a method with the same name but different parameters in the same class",
+			"Defining a method with the same name in the parent class",
+			"Redefining a method in a subclass that is already defined in the parent class",
+			"Method overloading with different return types"
+		],
+		"correctAnswer": "Redefining a method in a subclass that is already defined in the parent class"
+	},
+	{
+		"category": "Design Patterns",
+		"question": "Which design pattern allows the addition of new functionality to an object without modifying its structure?",
+		"options": [
+			"Decorator",
+			"Adapter",
+			"Facade",
+			"Composite"
+		],
+		"correctAnswer": "Decorator"
+	},
+	{
+		"category": "Abstraction",
+		"question": "What does the concept of abstraction in OOP help to achieve?",
+		"options": [
+			"Hiding unnecessary implementation details",
+			"Making methods private",
+			"Implementing multiple interfaces",
+			"Removing classes from inheritance hierarchies"
+		],
+		"correctAnswer": "Hiding unnecessary implementation details"
+	},
+	{
+		"category": "Inheritance",
+		"question": "Can a subclass in Java access private fields of the superclass?",
+		"options": [
+			"Yes, directly",
+			"Yes, if the subclass is in the same package",
+			"No, private fields are not accessible outside the class",
+			"Yes, by using reflection"
+		],
+		"correctAnswer": "No, private fields are not accessible outside the class"
+	},
+	{
+		"category": "Polymorphism",
+		"question": "Which of the following is an example of method overloading?",
+		"options": [
+			"Defining multiple methods with the same name but different return types",
+			"Defining multiple methods with the same name and parameters",
+			"Defining multiple methods with the same name and different parameters",
+			"Redefining a method in a subclass"
+		],
+		"correctAnswer": "Defining multiple methods with the same name and different parameters"
+	},
+	{
+		"category": "OOP Basics",
+		"question": "Which of the following keywords is used to prevent a method from being overridden in Java?",
+		"options": [
+			"final",
+			"static",
+			"abstract",
+			"private"
+		],
+		"correctAnswer": "final"
+	},
+	{
+		"category": "Encapsulation",
+		"question": "Which of the following access modifiers is the most restrictive in Java?",
+		"options": [
+			"private",
+			"protected",
+			"public",
+			"package-private"
+		],
+		"correctAnswer": "private"
+	}	
 ]
