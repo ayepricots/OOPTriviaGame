@@ -37,7 +37,7 @@ export default function Feedback() {
 	useEffect(() => {
 		const music = new Audio('/audio/its_not_showtime.wav');
 		music.loop = true; // Loop the music
-		music.volume = 0.5; // Adjust volume as needed
+		music.volume = 0.3; // Adjust volume as needed
 		music.play();
 
 		return () => {
