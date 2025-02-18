@@ -12,6 +12,8 @@ import startImage from "@/assets/btn_start.png";
 import ivoryfish from "@/assets/ivoryfish.png";
 import ayefish from "@/assets/ayefish.png";
 import richmanfish from "@/assets/richmanfish.png";
+import CategoryDropdown from "@/components/categoryDropdown";
+import TimeDropdown from "@/components/timeDropdown";
 
 const GameStartPage: React.FC = () => {
 	const router = useRouter(); // ✅ Initialize Router
