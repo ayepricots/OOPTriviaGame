@@ -11,6 +11,8 @@ import fishImage from "@/assets/ayefish2.png";
 import ivoryfish from "@/assets/ivoryfish.png";
 import ayefish from "@/assets/ayefish.png";
 import richmanfish from "@/assets/richmanfish.png";
+import doneImage from "@/assets/btn_done.png";
+import Link from "next/link";
 
 interface Question {
 	category: string;
@@ -52,7 +54,7 @@ export default function Game() {
 	// incorrect sound
 	const playIncorrectSound = () => {
 		const incorrectAudio = new Audio('/audio/incorrect.wav');
-		incorrectAudio.volume = 0.5; // Adjust volume as needed
+		incorrectAudio.volume = 0.2; // Adjust volume as needed
 		incorrectAudio.play();
 	}
 
@@ -382,17 +384,16 @@ export default function Game() {
 					</div>
 
 					{timer === Infinity && (
-						<div className="absolute bottom-6 left-0 right-0 flex justify-center">
-							<button
+						<div className="absolute bottom-7 left-0 right-0 flex justify-center">	
+							<Image
+								src={doneImage}
+								alt="Done button"
+								className="cursor-pointer h-full w-[150px] hover:scale-105 transition-transform"
 								onClick={() => {
 									saveGameResults();
 									router.push("/feedback");
 								}}
-								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] cursor-pointer hover:scale-110 transition-transform"
-							>
-								Done
-							</button>
-
+							/>
 						</div>
 					)}
 				</div>
