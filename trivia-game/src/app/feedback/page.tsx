@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import backgroundImage from "../../assets/bg_dim.png";
 import tankImage from "../../assets/window_tank.png";
 import windowLong from "../../assets/window_long.png";
+import playImage from "../../assets/btn_play.png";
+import quitImage from "../../assets/btn_quit.png";
 
 interface Player {
 	id: string;
@@ -153,8 +156,8 @@ export default function Feedback() {
 					<h1 className="absolute top-3 left-4 text-2xl text-white font-peaberry">
 						Feedback
 					</h1>
-					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center">
-						<div className="p-4 w-full h-[500px] overflow-y-scroll text-2xl text-[#684619] font-peaberry">
+					<div className="mt-14 mr-1 absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center">
+						<div className=" p-4 w-full h-[460px] overflow-y-scroll text-2xl text-[#684619] font-peaberry">
 							{gameResults?.players?.length ? (
 								gameResults.players.map((player) => (
 									<div
@@ -178,6 +181,22 @@ export default function Feedback() {
 							) : (
 								<p className="text-center text-lg text-white">No game results found.</p>
 							)}
+						</div>
+						<div className = "flex mt-5">
+							<Link href="/start">
+								<Image 
+								src={playImage} 
+								alt="Play Button" 
+								className="cursor-pointer h-[45px] w-full hover:scale-105 transition-transform" 
+								/>
+							</Link>
+							<Link href="/">
+								<Image 
+								src={quitImage} 
+								alt="Quit Button" 
+								className="ml-2 cursor-pointer hover:scale-105 transition-transform h-[45px] w-full" 
+								/>
+							</Link>
 						</div>
 					</div>
 				</div>
