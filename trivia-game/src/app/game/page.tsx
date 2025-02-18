@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // For navigation
 import questions from "@/data/questions.json";
 import Image from "next/image";
-import backgroundImage from "../../assets/bg_dim.png";
-import tankImage from "../../assets/window_tank.png";
-import windowLong from "../../assets/window_long.png";
-import fishImage from "../../assets/fish.jpeg";
-import ivoryfish from "../../assets/ivoryfish.png";
-import ayefish from "../../assets/ayefish.png";
-import richmanfish from "../../assets/richmanfish.png";
+import backgroundImage from "@/assets/bg_dim.png";
+import tankImage from "@/assets/window_tank.png";
+import windowLong from "@/assets/window_long.png";
+import fishImage from "@/assets/fish.jpeg";
+import ivoryfish from "@/assets/ivoryfish.png";
+import ayefish from "@/assets/ayefish.png";
+import richmanfish from "@/assets/richmanfish.png";
 
 interface Question {
 	category: string;
