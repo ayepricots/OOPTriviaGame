@@ -1,7 +1,7 @@
-# 🌊 **Pond Ponder** 🐠🎓  
+# **Pond Ponder** 🐠🎓  
 *A fun learning-based trivia game to practice your OOP concepts!*  
 
-[**🎮 Play Now!**](https://pond-ponder.vercel.app/)  
+[**🎮 Click to Play Now!**](https://pond-ponder.vercel.app/)  
 
 ## 📌 About the Game  
 Pond Ponder is an exciting trivia game where players test their Object-Oriented Programming (OOP) knowledge! Answer questions, grow your fish, and outsmart your friends. The bigger the fish, the smarter the coder! 🧠🐟  
@@ -28,3 +28,6 @@ Pond Ponder is an exciting trivia game where players test their Object-Oriented 
 ---
 
 Ready to become the **biggest fish in the pond**? Dive in now and show off your OOP mastery! 💡🎮🐠  
+
+---
+Created by PowerPuff People (Aye, Richman and Ivory 😼😼😼)
