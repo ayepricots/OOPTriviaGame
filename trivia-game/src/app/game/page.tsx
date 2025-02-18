@@ -82,7 +82,7 @@ export default function Game() {
 	}, []);
 
 	// Initialize players **after** numPlayers is set
-	const fishImages = [fishImage, ivoryfish, ayefish, richmanfish];
+	const fishImages = [ivoryfish, fishImage, ayefish, richmanfish];
 	
 	useEffect(() => {
 		if (numPlayers > 0) {
