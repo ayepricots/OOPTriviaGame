@@ -26,3 +26,27 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #c8b78c; /* Light beige to match the background */
+  border: 2px solid #6D845A; /* Darker greenish border */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6D845A; /* Dark green to match the window borders */
+  border: 2px solid #3e4224; /* Even darker border for contrast */
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #526443; /* Slightly darker green on hover */
+}
+
+.scrollable-container {
+  padding-right: 20px; /* Adds space between text and scrollbar */
+}
+

@@ -43,7 +43,7 @@ export default function Home() {
 							<Image
 								src={playBtn}
 								alt="Play Button"
-								className="cursor-pointer w-[150px] md:w-[250px] hover:brightness-50"
+								className="cursor-pointer hover:scale-110 transition-transform w-[150px] md:w-[250px]"
 								quality={100}
 								onClick={playBubbleSound}
 							/>
@@ -54,7 +54,7 @@ export default function Home() {
 							<Image
 								src={aboutBtn}
 								alt="About Button"
-								className="cursor-pointer w-[200px] md:w-[300px] hover:brightness-50"
+								className="cursor-pointer hover:scale-110 transition-transform w-[200px] md:w-[300px]"
 								quality={100}
 								onClick={playClickSound}
 							/>
