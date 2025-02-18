@@ -21,6 +21,40 @@ interface Question {
 
 export default function Game() {
 
+	// cute background music!
+	useEffect(() => {
+		const music = new Audio('/audio/dewwy.wav');
+		music.loop = true; // Loop the music
+		music.volume = 0.5; // Adjust volume as needed
+		music.play();
+
+		return () => {
+			music.pause();
+			music.currentTime = 0; // Reset audio when leaving page
+		};
+	}, []);
+
+	// buzzer sound
+	const playBuzzerSound = () => {
+		const buzzerAudio = new Audio('/audio/buzzer.wav');
+		buzzerAudio.volume = 0.5; // Adjust volume as needed
+		buzzerAudio.play();
+	};
+
+	// correct sound
+	const playCorrectSound = () => {
+		const correctAudio = new Audio('/audio/correct.wav');
+		const cronchAudio = new Audio('/audio/cronch.wav');
+		correctAudio.play();
+		// cronchAudio.play();
+	}
+
+	// incorrect sound
+	const playIncorrectSound = () => {
+		const incorrectAudio = new Audio('/audio/incorrect.wav');
+		incorrectAudio.play();
+	}
+
 	const [gameSettings, setGameSettings] = useState<{ timeLimit?: string; fishPositions?: any[]; category?: string; }>({});
 	const [timer, setTimer] = useState<number>(300); // Default to 5 min Mode
 	const [fishPositions, setFishPositions] = useState<any[]>([]);
@@ -48,7 +82,7 @@ export default function Game() {
 	}, []);
 
 	// Initialize players **after** numPlayers is set
-	const fishImages = [fishImage, ivoryfish, ayefish, richmanfish];
+	const fishImages = [ivoryfish, fishImage, ayefish, richmanfish];
 	
 	useEffect(() => {
 		if (numPlayers > 0) {
@@ -71,7 +105,7 @@ export default function Game() {
 
 	// keybinds for up to 4 players
 	const keybinds = ["A", "F", "J", "L"].slice(0, numPlayers);
-
+  
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
@@ -156,8 +190,11 @@ export default function Game() {
 
 	// show options
 	const handleAnswer = (key: string) => {
-		if (questionLocked) return; // prevent another player from answering
+		if (questionLocked) {
+			return; // prevent another player from answering
+		}
 
+		playBuzzerSound(); // Play buzzer sound
 		const playerIndex = players.findIndex(p => p.key === key);
 		if (playerIndex !== -1) {
 			setCurrentPlayerIndex(playerIndex);
@@ -169,8 +206,11 @@ export default function Game() {
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
+
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
+		// Play sound based on correctness
+		isCorrect ? playCorrectSound() : playIncorrectSound();
 
 		// Update player scores and streaks
 		setPlayers(prevPlayers =>
@@ -316,7 +356,7 @@ export default function Game() {
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] transition"
+										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] cursor-pointer hover:scale-110 transition-transform"
 									>
 										{option}
 									</button>
@@ -339,7 +379,7 @@ export default function Game() {
 									saveGameResults();
 									router.push("/feedback");
 								}}
-								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] transition"
+								className="w-[100px] p-2 bg-[#89bca6] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#68917f] cursor-pointer hover:scale-110 transition-transform"
 							>
 								Done
 							</button>
