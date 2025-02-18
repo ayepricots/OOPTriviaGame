@@ -7,7 +7,7 @@ import backgroundImage from "@/assets/bg_dim.png";
 import tankImage from "@/assets/window_tank.png";
 import btnAdd from "@/assets/btn_add.png";
 import windowLong from "@/assets/window_long.png";
-import fishImage from "@/assets/fish.jpeg";
+import fishImage from "@/assets/ayefish2.png";
 import startImage from "@/assets/btn_start.png";
 import ivoryfish from "@/assets/ivoryfish.png";
 import ayefish from "@/assets/ayefish.png";

@@ -7,7 +7,7 @@ import Image from "next/image";
 import backgroundImage from "@/assets/bg_dim.png";
 import tankImage from "@/assets/window_tank.png";
 import windowLong from "@/assets/window_long.png";
-import fishImage from "@/assets/fish.jpeg";
+import fishImage from "@/assets/ayefish2.png";
 import ivoryfish from "@/assets/ivoryfish.png";
 import ayefish from "@/assets/ayefish.png";
 import richmanfish from "@/assets/richmanfish.png";
