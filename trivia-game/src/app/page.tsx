@@ -34,10 +34,10 @@ export default function Home() {
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
 			<Image src={backgroundImage} alt="Background" fill quality={100} className="z-[-1] object-cover" />
-
 			{isMobile && (
 				<div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80 flex flex-col items-center justify-center text-white text-center p-6 z-50">
-					<p className="text-2xl font-bold mb-4 font-peaberry">⚠️ Not Optimised for Mobile ⚠️</p>
+					<p className="text-2xl font-bold mb-4 font-peaberry">⚠️</p>
+					<p className="text-2xl font-bold mb-4 font-peaberry">Not Optimised for Mobile</p>
 					<p className="text-lg font-peaberry">This game is best played on a desktop or laptop.</p>
 					<p className="text-lg font-peaberry">Please switch to a larger screen for the best experience. 🐟</p>
 				</div>
