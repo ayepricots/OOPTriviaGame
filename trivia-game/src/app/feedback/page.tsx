@@ -20,7 +20,8 @@ interface Player {
 
 interface GameResults {
 	players: Player[];
-	fishPositions: any[]; // Adjust type based on your actual data
+		fishPositions: any[]; // Adjust type based on your actual data
+}
 
 interface Question {
 	category: string;
