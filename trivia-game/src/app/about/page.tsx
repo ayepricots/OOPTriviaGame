@@ -29,6 +29,11 @@ const teamLinks = [
 ];
 
 export default function About() {
+	const playClickSound = () => {
+		const clickAudio = new Audio('/audio/click.wav');
+		clickAudio.play();
+	};
+
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
 			{/* Background Image */}
@@ -81,6 +86,7 @@ export default function About() {
 									alt="Back Button"
 									className="cursor-pointer hover:scale-110 transition-transform w-[90px] md:w-[160px]"
 									quality={100}
+                  onClick={playClickSound}
 								/>
 							</Link>
 						</div>

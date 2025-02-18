@@ -1,11 +1,23 @@
+"use client";
+
 import Image from 'next/image';
 import Link from 'next/link';
-import backgroundImage from '../assets/bg_dim.png';
-import windowSquareAndTitle from '../assets/window_square_and_title.png';
-import playBtn from '../assets/txt_play.png';
-import aboutBtn from '../assets/txt_aboutus.png';
+import backgroundImage from '@/assets/bg_dim.png';
+import windowSquareAndTitle from '@/assets/window_square_and_title.png';
+import playBtn from '@/assets/txt_play.png';
+import aboutBtn from '@/assets/txt_aboutus.png';
 
 export default function Home() {
+	const playBubbleSound = () => {
+		const bubbleAudio = new Audio('/audio/bubble.wav');
+		bubbleAudio.play();
+	}
+
+	const playClickSound = () => {
+		const clickAudio = new Audio('/audio/click.wav');
+		clickAudio.play();
+	};
+
 	return (
 		<div className="relative h-screen w-full flex items-center justify-center">
 			<Image
@@ -33,6 +45,7 @@ export default function Home() {
 								alt="Play Button"
 								className="cursor-pointer hover:scale-110 transition-transform w-[150px] md:w-[250px]"
 								quality={100}
+								onClick={playBubbleSound}
 							/>
 						</Link>
 					</div>
@@ -43,6 +56,7 @@ export default function Home() {
 								alt="About Button"
 								className="cursor-pointer hover:scale-110 transition-transform w-[200px] md:w-[300px]"
 								quality={100}
+								onClick={playClickSound}
 							/>
 						</Link>
 					</div>
