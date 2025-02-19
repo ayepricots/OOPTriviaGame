@@ -348,21 +348,21 @@ export default function Game() {
 						{currentQuestion?.category}
 					</h1>
 
-					<div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center ">
+					<div className={`absolute top-16 bottom-0 left-0 right-0 flex flex-col items-center justify-start overflow-y-auto ${timer === Infinity ? "max-h-[450px]" : "max-h-[500px]"}`}>
 						{feedback ? (
 							<div className="p-4 text-center text-3xl text-[#684619] font-peaberry">
 								{feedback}
 							</div>
 						) : (
 							<>
-								<div className="p-4 w-full text-center text-2xl text-[#684619] font-peaberry overflow-hidden flex items-center justify-center">
+								<div className="p-4 w-full text-center text-2xl text-[#684619] font-peaberry flex items-center justify-center">
 									{currentQuestion?.question}
 								</div>
 							</>
 						)}
 
 						{showOptions && !feedback ? (
-							<div className="flex flex-col space-y-4">
+							<div className="flex flex-col space-y-4 items-center">
 								{currentQuestion?.options.map((option: string, index: number) => (
 									<button
 										key={index}
@@ -384,7 +384,7 @@ export default function Game() {
 					</div>
 
 					{timer === Infinity && (
-						<div className="absolute bottom-7 left-0 right-0 flex justify-center">	
+						<div className="absolute bottom-7 left-0 right-0 flex justify-center">
 							<Image
 								src={doneImage}
 								alt="Done button"
