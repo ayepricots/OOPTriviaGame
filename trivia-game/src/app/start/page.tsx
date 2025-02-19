@@ -12,6 +12,7 @@ import startImage from "@/assets/btn_start.png";
 import ivoryfish from "@/assets/ivoryfish.png";
 import ayefish from "@/assets/ayefish.png";
 import richmanfish from "@/assets/richmanfish.png";
+import topLeftImage from "@/assets/btn_tutorial.png";
 import CategoryDropdown from "@/components/categoryDropdown";
 import TimeDropdown from "@/components/timeDropdown";
 
@@ -111,6 +112,11 @@ const GameStartPage: React.FC = () => {
 		router.push("/game");
 	};
 
+	const handleTutorial = () => {
+		// Navigate to the tutorial page (replace with your actual tutorial page URL)
+		router.push("/tutorial");
+	};
+
 	return (
 		<div className="relative flex items-center justify-center h-screen">
 			{/* Keyframes Animation */}
@@ -134,6 +140,20 @@ const GameStartPage: React.FC = () => {
 				quality={100}
 				className="z-[-1] object-cover"
 			/>
+
+			{/* Clickable Top-Left Image */}
+			<div
+					className="absolute top-4 left-4 w-[50px] h-[50px] cursor-pointer hover:scale-110 transition-transform"
+					onClick={handleTutorial} // ✅ Clicking this image triggers handleTutorial
+				>
+					<Image
+					src={topLeftImage}
+					alt="Top Left Icon"
+					width={80}
+					height={80}
+					quality={100}
+					/>
+				</div>
 
 			{/* Main Container */}
 			<div className="flex space-x-4">
