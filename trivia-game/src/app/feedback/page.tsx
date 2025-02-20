@@ -15,7 +15,7 @@ interface Player {
 	fishSize: number;
 	key: string;
 	fishImage: string;
-	incorrectQuestions: string[];
+	incorrectQuestions: any[];
 }
 
 interface GameResults {
@@ -204,11 +204,13 @@ export default function Feedback() {
 										<h4 className="font-bold mt-6">Incorrect Questions:</h4>
 										<ul className="list-disc list-inside text-base">
 											{player.incorrectQuestions.length > 0 ? (
-												player.incorrectQuestions.map((question, qIndex) => (
-													<li className="mt-4" key={qIndex}>{question}</li>
+												player.incorrectQuestions.map((incorrectQ, qIndex) => (
+													<li className="mt-4" key={qIndex}>{incorrectQ.question}</li>
 												))
+											) : player.fishSize === 75 ? (
+												<p className="text-red-600">Oops! Looks like you haven't answered any questions.</p>
 											) : (
-												<p className="text-green-600">Perfect Score!</p>
+												<p className="text-green-600">You nailed every question!</p>
 											)}
 										</ul>
 									</div>
