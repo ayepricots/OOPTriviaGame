@@ -113,7 +113,7 @@ export default function Game() {
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
 	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
-	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, string[]>>({});
+	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, { question: string; category: string; }[]>>({});
 	const [specialMessage, setSpecialMessage] = useState<string | null>(null);
 	const [questionLocked, setQuestionLocked] = useState(false); // 
 
@@ -150,7 +150,11 @@ export default function Game() {
 				fishSize: Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE), // Calculate fish size
 				key: player.key, // Store key
 				fishImage: player.fishImage.src, // Store fish image
-				incorrectQuestions: incorrectAnswers[player.id] || [], // Store wrong questions
+				incorrectQuestions: incorrectAnswers[player.id]?.map(q => ({
+					question: q.question,
+					category: q.category,
+				})) || [],
+
 			})),
 			fishPositions: fishPositions,
 		};
@@ -248,9 +252,15 @@ export default function Game() {
 		if (!isCorrect) {
 			setIncorrectAnswers(prev => ({
 				...prev,
-				[currentPlayerIndex]: [...(prev[currentPlayerIndex] || []), currentQuestion.question],
+				[currentPlayerIndex]: [
+					...(prev[currentPlayerIndex] || []),
+					{
+						question: currentQuestion.question,
+						category: currentQuestion.category, // Store category for feedback
+					}
+				],
 			}));
-			console.log(`Player ${players[currentPlayerIndex]?.key} added to incorrect answers.`);
+			console.log("Incorrect answers:", incorrectAnswers);
 		}
 
 		setTimeout(() => {
