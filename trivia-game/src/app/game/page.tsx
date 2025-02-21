@@ -60,6 +60,7 @@ export default function Game() {
 
 	const [gameSettings, setGameSettings] = useState<{ timeLimit?: string; fishPositions?: any[]; category?: string; }>({});
 	const [timer, setTimer] = useState<number>(300); // Default to 5 min Mode
+	const [answerTimer, setAnswerTimer] = useState<number | null>(null);
 	const [fishPositions, setFishPositions] = useState<any[]>([]);
 	const [numPlayers, setNumPlayers] = useState<number>(0);
 	const [players, setPlayers] = useState<any[]>([]);
@@ -180,6 +181,37 @@ export default function Game() {
 		return () => clearInterval(timerInterval);
 	}, [router, timer]);
 
+	useEffect(() => {
+		if (answerTimer === null) return;
+
+		// Start the countdown for the answer timer
+		const interval = setInterval(() => {
+			setAnswerTimer((prev) => {
+				if (prev !== null && prev > 1) {
+					return prev - 1;
+				} else {
+					clearInterval(interval);
+					// Player ran out of time
+					handleMissedAnswer();
+					return null;
+				}
+			});
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [answerTimer]);
+
+	// Function when a player doesn't answer in time
+	const handleMissedAnswer = () => {
+		setFeedback("Time's up!");
+		setOptionsLocked(true); // Lock options again
+		setTimeout(() => {
+			setFeedback(null);
+			setCurrentQuestion(getRandomQuestion());
+			setCurrentPlayerIndex(-1);
+			setQuestionLocked(false);
+		}, 1000);
+	};
 
 	// Handle player key press
 	useEffect(() => {
@@ -207,6 +239,7 @@ export default function Game() {
 			setCurrentPlayerIndex(playerIndex);
 			setOptionsLocked(false); // Allow player to select an answer
 			setQuestionLocked(true); // only player can answer the question
+			setAnswerTimer(2); // Set timer for player to answer
 		}
 	};
 
@@ -215,6 +248,7 @@ export default function Game() {
 		if (!currentQuestion) return;
 
 		setOptionsLocked(true); // Lock options again
+		setAnswerTimer(null); // Stop the answer timer
 
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
@@ -288,8 +322,15 @@ export default function Game() {
 					<Image src={tankImage} alt="Tank" fill quality={100} className="object-cover" />
 
 					<div className="absolute top-3 left-6 text-2xl text-white font-peaberry">
-						Time left: {timer === Infinity ? "Zen Mode" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
+						{answerTimer !== null && currentPlayerIndex !== -1 ? (
+							<span> Answer in: {answerTimer}s</span>
+						) : (
+							<span>
+								Time left: {timer === Infinity ? "Zen Mode" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
+							</span>
+						)}
 					</div>
+
 
 					{players.map((player, index) => (
 						<div key={index}
