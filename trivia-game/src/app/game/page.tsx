@@ -111,11 +111,11 @@ export default function Game() {
 
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
 	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, { question: string; category: string; }[]>>({});
 	const [specialMessage, setSpecialMessage] = useState<string | null>(null);
-	const [questionLocked, setQuestionLocked] = useState(false); // 
+	const [questionLocked, setQuestionLocked] = useState(false);
+	const [optionsLocked, setOptionsLocked] = useState(true);
 
 
 	// For navigation to the feedback page
@@ -205,14 +205,16 @@ export default function Game() {
 		const playerIndex = players.findIndex(p => p.key === key);
 		if (playerIndex !== -1) {
 			setCurrentPlayerIndex(playerIndex);
-			setShowOptions(true);
-			setQuestionLocked(true); // Lock question for this player
+			setOptionsLocked(false); // Allow player to select an answer
+			setQuestionLocked(true); // only player can answer the question
 		}
 	};
 
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
+
+		setOptionsLocked(true); // Lock options again
 
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
@@ -266,7 +268,6 @@ export default function Game() {
 		setTimeout(() => {
 			setFeedback(null);
 			setCurrentQuestion(getRandomQuestion());
-			setShowOptions(false);
 			setCurrentPlayerIndex(-1);
 			setQuestionLocked(false); // Unlock for the next question
 		}, 1000);
@@ -370,27 +371,27 @@ export default function Game() {
 								</div>
 							</>
 						)}
-
-						{showOptions && !feedback ? (
+						{!feedback ? (
 							<div className="flex flex-col space-y-4 items-center">
+								<div className="text-xl text-[#856336] font-peaberry text-center mb-4">
+									{specialMessage || "Tap your letter to buzz in!"}
+								</div>
 								{currentQuestion?.options.map((option: string, index: number) => (
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] cursor-pointer hover:scale-110 transition-transform"
+										// disable options if locked
+										disabled={optionsLocked}
+										className={`w-[300px] p-2 text-xl font-peaberry rounded-lg
+											${optionsLocked
+												? "bg-gray-500 cursor-not-allowed"  // Disabled state
+												: "bg-[#6D835A] text-white hover:bg-[#4b5c3c] hover:scale-110 cursor-pointer transition-transform"}`}
 									>
 										{option}
 									</button>
 								))}
 							</div>
-						) : !feedback ? (
-							<div className="flex flex-wrap justify-center gap-4">
-								<div className=" text-xl text-[#856336] font-peaberry text-center">
-									{specialMessage || "Tap your letter to buzz in!"}
-								</div>
-							</div>
 						) : null}
-
 					</div>
 
 					{timer === Infinity && (
