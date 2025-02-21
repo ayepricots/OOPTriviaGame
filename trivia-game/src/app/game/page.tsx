@@ -60,6 +60,7 @@ export default function Game() {
 
 	const [gameSettings, setGameSettings] = useState<{ timeLimit?: string; fishPositions?: any[]; category?: string; }>({});
 	const [timer, setTimer] = useState<number>(300); // Default to 5 min Mode
+	const [answerTimer, setAnswerTimer] = useState<number | null>(null);
 	const [fishPositions, setFishPositions] = useState<any[]>([]);
 	const [numPlayers, setNumPlayers] = useState<number>(0);
 	const [players, setPlayers] = useState<any[]>([]);
@@ -111,11 +112,11 @@ export default function Game() {
 
 	const [currentPlayerIndex, setCurrentPlayerIndex] = useState(-1);
 	const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-	const [showOptions, setShowOptions] = useState(false);
 	const [feedback, setFeedback] = useState<string | null>(null);
-	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, string[]>>({});
+	const [incorrectAnswers, setIncorrectAnswers] = useState<Record<number, { question: string; category: string; }[]>>({});
 	const [specialMessage, setSpecialMessage] = useState<string | null>(null);
-	const [questionLocked, setQuestionLocked] = useState(false); // 
+	const [questionLocked, setQuestionLocked] = useState(false);
+	const [optionsLocked, setOptionsLocked] = useState(true);
 
 
 	// For navigation to the feedback page
@@ -150,7 +151,11 @@ export default function Game() {
 				fishSize: Math.min(FISH_SIZE * player.score, MAX_FISH_SIZE), // Calculate fish size
 				key: player.key, // Store key
 				fishImage: player.fishImage.src, // Store fish image
-				incorrectQuestions: incorrectAnswers[player.id] || [], // Store wrong questions
+				incorrectQuestions: incorrectAnswers[player.id]?.map(q => ({
+					question: q.question,
+					category: q.category,
+				})) || [],
+
 			})),
 			fishPositions: fishPositions,
 		};
@@ -176,6 +181,37 @@ export default function Game() {
 		return () => clearInterval(timerInterval);
 	}, [router, timer]);
 
+	useEffect(() => {
+		if (answerTimer === null) return;
+
+		// Start the countdown for the answer timer
+		const interval = setInterval(() => {
+			setAnswerTimer((prev) => {
+				if (prev !== null && prev > 1) {
+					return prev - 1;
+				} else {
+					clearInterval(interval);
+					// Player ran out of time
+					handleMissedAnswer();
+					return null;
+				}
+			});
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, [answerTimer]);
+
+	// Function when a player doesn't answer in time
+	const handleMissedAnswer = () => {
+		setFeedback("Time's up!");
+		setOptionsLocked(true); // Lock options again
+		setTimeout(() => {
+			setFeedback(null);
+			setCurrentQuestion(getRandomQuestion());
+			setCurrentPlayerIndex(-1);
+			setQuestionLocked(false);
+		}, 1000);
+	};
 
 	// Handle player key press
 	useEffect(() => {
@@ -201,14 +237,18 @@ export default function Game() {
 		const playerIndex = players.findIndex(p => p.key === key);
 		if (playerIndex !== -1) {
 			setCurrentPlayerIndex(playerIndex);
-			setShowOptions(true);
-			setQuestionLocked(true); // Lock question for this player
+			setOptionsLocked(false); // Allow player to select an answer
+			setQuestionLocked(true); // only player can answer the question
+			setAnswerTimer(2); // Set timer for player to answer
 		}
 	};
 
 	// Handle answer selection
 	const handleOptionClick = (selectedOption: string) => {
 		if (!currentQuestion) return;
+
+		setOptionsLocked(true); // Lock options again
+		setAnswerTimer(null); // Stop the answer timer
 
 		const isCorrect = selectedOption === currentQuestion.correctAnswer;
 		setFeedback(isCorrect ? "Correct!" : "Incorrect!");
@@ -248,15 +288,20 @@ export default function Game() {
 		if (!isCorrect) {
 			setIncorrectAnswers(prev => ({
 				...prev,
-				[currentPlayerIndex]: [...(prev[currentPlayerIndex] || []), currentQuestion.question],
+				[currentPlayerIndex]: [
+					...(prev[currentPlayerIndex] || []),
+					{
+						question: currentQuestion.question,
+						category: currentQuestion.category, // Store category for feedback
+					}
+				],
 			}));
-			console.log(`Player ${players[currentPlayerIndex]?.key} added to incorrect answers.`);
+			console.log("Incorrect answers:", incorrectAnswers);
 		}
 
 		setTimeout(() => {
 			setFeedback(null);
 			setCurrentQuestion(getRandomQuestion());
-			setShowOptions(false);
 			setCurrentPlayerIndex(-1);
 			setQuestionLocked(false); // Unlock for the next question
 		}, 1000);
@@ -277,8 +322,15 @@ export default function Game() {
 					<Image src={tankImage} alt="Tank" fill quality={100} className="object-cover" />
 
 					<div className="absolute top-3 left-6 text-2xl text-white font-peaberry">
-						Time left: {timer === Infinity ? "Zen Mode" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
+						{answerTimer !== null && currentPlayerIndex !== -1 ? (
+							<span> Answer in: {answerTimer}s</span>
+						) : (
+							<span>
+								Time left: {timer === Infinity ? "Zen Mode" : `${Math.floor(timer / 60)}:${String(timer % 60).padStart(2, "0")}`}
+							</span>
+						)}
 					</div>
+
 
 					{players.map((player, index) => (
 						<div key={index}
@@ -360,27 +412,27 @@ export default function Game() {
 								</div>
 							</>
 						)}
-
-						{showOptions && !feedback ? (
+						{!feedback ? (
 							<div className="flex flex-col space-y-4 items-center">
+								<div className="text-xl text-[#856336] font-peaberry text-center mb-4">
+									{specialMessage || "Tap your letter to buzz in!"}
+								</div>
 								{currentQuestion?.options.map((option: string, index: number) => (
 									<button
 										key={index}
 										onClick={() => handleOptionClick(option)}
-										className="w-[300px] p-2 bg-[#6D835A] text-xl text-[#ffffff] font-peaberry rounded-lg hover:bg-[#4b5c3c] cursor-pointer hover:scale-110 transition-transform"
+										// disable options if locked
+										disabled={optionsLocked}
+										className={`w-[300px] p-2 text-xl font-peaberry rounded-lg
+											${optionsLocked
+												? "bg-gray-500 cursor-not-allowed"  // Disabled state
+												: "bg-[#6D835A] text-white hover:bg-[#4b5c3c] hover:scale-110 cursor-pointer transition-transform"}`}
 									>
 										{option}
 									</button>
 								))}
 							</div>
-						) : !feedback ? (
-							<div className="flex flex-wrap justify-center gap-4">
-								<div className=" text-xl text-[#856336] font-peaberry text-center">
-									{specialMessage || "Tap your letter to buzz in!"}
-								</div>
-							</div>
 						) : null}
-
 					</div>
 
 					{timer === Infinity && (

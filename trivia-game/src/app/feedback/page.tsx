@@ -15,7 +15,7 @@ interface Player {
 	fishSize: number;
 	key: string;
 	fishImage: string;
-	incorrectQuestions: string[];
+	incorrectQuestions: any[];
 }
 
 interface GameResults {
@@ -204,11 +204,35 @@ export default function Feedback() {
 										<h4 className="font-bold mt-6">Incorrect Questions:</h4>
 										<ul className="list-disc list-inside text-base">
 											{player.incorrectQuestions.length > 0 ? (
-												player.incorrectQuestions.map((question, qIndex) => (
-													<li className="mt-4" key={qIndex}>{question}</li>
-												))
+												(() => {
+													// Count occurrences of each category
+													const categoryCount = player.incorrectQuestions.reduce((acc, incorrectQ) => {
+														acc[incorrectQ.category] = (acc[incorrectQ.category] || 0) + 1;
+														return acc;
+													}, {});
+
+													// Find the most frequent category
+													const mostFrequentCategory = Object.keys(categoryCount).reduce((a, b) => 
+														categoryCount[a] >= categoryCount[b] ? a : b
+													);
+
+													return (
+														<div>
+															<ul>
+																{player.incorrectQuestions.map((incorrectQ, qIndex) => (
+																	<li className="mt-2" key={qIndex}>{incorrectQ.question}</li>
+																))}
+															</ul>
+															<p className="mt-3 font-bold text-blue-600">
+																You can polish your {mostFrequentCategory}! ({categoryCount[mostFrequentCategory]} mistakes)
+															</p>
+														</div>
+													);
+												})()
+											) : player.fishSize === 75 ? (
+												<p className="mt-2 font-bold text-red-600">Oops! Looks like you haven't answered any questions.</p>
 											) : (
-												<p className="text-green-600">Perfect Score!</p>
+												<p className="mt-2 font-bold text-green-600">You nailed every question!</p>
 											)}
 										</ul>
 									</div>
